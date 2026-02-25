@@ -1,426 +1,631 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Navil Healthy - Edisi Spesial Ramadhan</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navil Healthy - Premium Store</title>
+    
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== VARIABLES (THEME GOLD) ===== */
+        :root {
+            --primary: #15803d; 
+            --primary-gradient: linear-gradient(135deg, #15803d 0%, #166534 100%);
+            --gold: #d97706;
+            --gold-gradient: linear-gradient(45deg, #b45309, #d97706, #fbbf24);
+            
+            /* Dark Mode Default */
+            --bg-body: #0f172a;
+            --bg-pattern: url("https://www.transparenttextures.com/patterns/arabesque.png");
+            --bg-card: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+        }
 
-<style>
-/* --- RESET & BASIC --- */
-*{box-sizing:border-box;font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif}
-body{
-    margin:0;
-    background-color: #f8f9f5;
-    background-image: url("https://www.transparenttextures.com/patterns/arabesque.png"); /* Pola Islami halus */
-    color:#333;
-    padding-bottom:0;
-}
+        [data-theme="light"] {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
 
-/* --- TRUST BAR --- */
-.trust-bar{
-  position:sticky;top:0;z-index:1000;
-  background: linear-gradient(90deg, #1b5e20 0%, #2e7d32 50%, #1b5e20 100%);
-  color:#f1d27b; /* Warna Emas */
-  text-align:center;padding:10px;font-size:12px;letter-spacing:0.5px;font-weight: 600;
-  border-bottom: 2px solid #d4af37;
-}
+        /* ===== GLOBAL ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
+        body { 
+            font-family: 'Poppins', sans-serif; background-color: var(--bg-body); 
+            background-image: var(--bg-pattern); background-attachment: fixed;
+            color: var(--text-main); padding-bottom: 80px; 
+        }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; font-family: inherit; }
+        select { font-family: 'Poppins', sans-serif; cursor: pointer; }
 
-/* --- HERO SLIDER --- */
-.hero-slider {
-    position: relative; width: 100%; height: 380px; overflow: hidden; background: #000;
-}
-.slide {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    opacity: 0; transition: opacity 1s ease-in-out;
-    background-size: cover; background-position: center;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    text-align: center; color: white;
-}
-.slide.active { opacity: 1; }
-.slide::before {
-    content: ''; position: absolute; top:0; left:0; right:0; bottom:0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)); z-index: 1;
-}
-.slide-content { position: relative; z-index: 2; padding: 20px; max-width: 800px;}
-.slide h1 { font-size: 42px; margin: 0 0 15px; font-weight: 700; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); color: #f1d27b; }
-.slide p { font-size: 18px; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); }
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border); padding: 15px 0;
+        }
+        .nav-container {
+            max-width: 1200px; margin: auto; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { 
+            font-size: 24px; font-weight: 700; color: var(--primary); 
+            display: flex; align-items: center; gap: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .cart-icon-nav { font-size: 24px; position: relative; cursor: pointer; color: white; }
+        .badge {
+            position: absolute; top: -5px; right: -8px; 
+            background: var(--gold-gradient); color: white;
+            font-size: 11px; width: 20px; height: 20px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: bold;
+        }
 
-/* --- FILTERS & SEARCH --- */
-.filter-section {
-    max-width: 1150px; margin: -30px auto 20px; padding: 0 20px;
-    position: relative; z-index: 10;
-}
-.search-input {
-    width: 100%; padding: 18px 25px; border-radius: 15px; border: 2px solid #d4af37;
-    font-size: 16px; box-shadow: 0 5px 25px rgba(0,0,0,0.1); outline: none;
-    background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') no-repeat 95% center;
-}
-.categories { display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; padding-bottom: 10px; }
-.cat-btn {
-    padding: 10px 20px; border-radius: 25px; border: 1px solid #d4af37;
-    background: #fff; cursor: pointer; white-space: nowrap; font-size: 14px; transition: 0.3s; font-weight: 500; color: #1b5e20;
-}
-.cat-btn.active { background: #1b5e20; color: #f1d27b; border-color: #1b5e20; box-shadow: 0 4px 12px rgba(46,125,50,0.3); }
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative; height: 500px; display: flex; align-items: center; justify-content: center;
+            text-align: center; color: white; overflow: hidden; border-bottom: 4px solid var(--gold);
+        }
+        .hero-bg {
+            position: absolute; inset: 0; background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 1s ease; z-index: 1; transform: scale(1.1);
+        }
+        .hero-bg.active { opacity: 1; transform: scale(1); transition: opacity 1s, transform 6s; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.9)); z-index: 2; }
+        .hero-content { position: relative; z-index: 10; max-width: 800px; padding: 20px; }
+        .hero h1 { font-size: 42px; margin-bottom: 10px; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .cta-btn {
+            background: var(--gold-gradient); color: white; padding: 14px 40px; border-radius: 50px;
+            font-weight: 700; border: 2px solid rgba(255,255,255,0.3); font-size: 16px; 
+            box-shadow: 0 0 20px rgba(217, 119, 6, 0.5);
+        }
+        .cta-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(217, 119, 6, 0.8); }
 
-/* --- PRODUCT CARDS --- */
-.container{
-  max-width:1150px;margin:auto;padding:10px 20px 60px;
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px;
-}
-.card{
-  background:#fff;border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,.04);
-  overflow:hidden; display: flex; flex-direction: column; border: 1px solid #f0f0f0; transition: 0.3s;
-}
-.card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(212,175,55,0.2); border-color: #d4af37; }
+        /* ===== TRUST BAR ===== */
+        .trust-bar {
+            background: var(--primary-gradient); color: #fef3c7; padding: 12px; 
+            text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 1px;
+            position: relative; z-index: 20; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
 
-.img-wrapper { position: relative; height: 260px; background: #f9f9f9; }
-.card-img { width:100%; height:100%; object-fit:cover; transition: opacity 0.3s; }
+        /* ===== CONTROLS ===== */
+        .container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { 
+            color: var(--gold); font-size: 32px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .controls { 
+            background: var(--bg-card); padding: 15px; border-radius: 15px;
+            box-shadow: var(--shadow); margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px; border: 1px solid var(--border);
+        }
+        .search-input {
+            width: 100%; padding: 15px; border-radius: 10px; border: 1px solid var(--border);
+            background: var(--bg-body); color: var(--text-main); font-size: 16px; outline: none;
+        }
+        .categories { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+        .cat-btn {
+            padding: 10px 25px; border-radius: 50px; border: 1px solid var(--border);
+            background: var(--bg-body); color: var(--text-main); white-space: nowrap; font-weight: 500;
+        }
+        .cat-btn.active { background: var(--gold-gradient); color: white; border-color: transparent; }
 
-.slider-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; transform: translateY(-50%); padding: 0 10px; opacity: 0; transition: 0.3s; }
-.card:hover .slider-nav { opacity: 1; }
-.nav-btn { background: rgba(255,255,255,0.9); border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-weight: bold; }
+        /* ===== PRODUCT CARD & SLIDER ===== */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+        .card {
+            background: var(--bg-card); border-radius: 20px; overflow: hidden;
+            box-shadow: var(--shadow); border: 1px solid var(--border);
+            display: flex; flex-direction: column; position: relative;
+        }
+        .card:hover { transform: translateY(-8px); border-color: #fbbf24; }
 
-.dots-container { position: absolute; bottom: 12px; width: 100%; display: flex; justify-content: center; gap: 6px; }
-.dot { width: 7px; height: 7px; background: rgba(255,255,255,0.5); border-radius: 50%; transition: 0.3s; }
-.dot.active { background: #d4af37; width: 15px; border-radius: 10px; }
+        .img-wrapper { position: relative; height: 260px; background: #eee; overflow: hidden; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
+        
+        /* Slider Controls */
+        .slider-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 30px; height: 30px; background: rgba(0,0,0,0.6);
+            border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); color: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; opacity: 0; transition: 0.3s; z-index: 10;
+        }
+        .card:hover .slider-btn { opacity: 1; }
+        .prev-btn { left: 10px; } .next-btn { right: 10px; }
+        .slider-btn:hover { background: var(--gold); }
+        
+        .dots-container {
+            position: absolute; bottom: 10px; width: 100%; display: flex; 
+            justify-content: center; gap: 5px; z-index: 5;
+        }
+        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; }
+        .dot.active { background: var(--gold); width: 15px; border-radius: 10px; }
 
-.card-body{padding:20px; display:flex; flex-direction:column; flex:1;}
-.card-body h3 { margin: 0 0 8px; font-size: 18px; color: #1b5e20; }
+        .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+        .product-cat { font-size: 11px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+        .product-name { font-size: 17px; font-weight: 700; margin: 8px 0; color: var(--text-main); font-family: 'Playfair Display', serif; height: 50px; overflow: hidden; }
+        .product-info { font-size: 12px; color: var(--text-muted); background: rgba(128,128,128,0.1); padding: 5px 10px; border-radius: 5px; width: fit-content; margin-bottom: 10px; }
+        .product-price { font-size: 20px; font-weight: 700; color: var(--primary); margin-top: auto; }
+        .start-from { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+        
+        .card-actions { margin-top: 15px; display: grid; grid-template-columns: 1fr 2fr; gap: 10px; }
+        .btn-outline { border: 1px solid var(--border); background: transparent; color: var(--text-main); border-radius: 10px; font-weight: 600; font-size: 13px; }
+        .btn-fill { 
+            background: var(--primary-gradient); color: white; border: none; 
+            border-radius: 10px; font-weight: 600; font-size: 13px;
+            box-shadow: 0 4px 10px rgba(22, 101, 52, 0.2);
+        }
 
-.product-info { 
-    display: inline-block; background: #fdf6e3; color: #967117; 
-    padding: 4px 12px; border-radius: 6px; font-size: 12px; 
-    font-weight: 600; margin-bottom: 12px; align-self: flex-start; border: 1px solid #f1d27b;
-}
+        /* ===== SOSMED SECTION (YANG KEMBALI) ===== */
+        .socmed-section { background: var(--bg-card); padding: 50px 20px; margin-top: 50px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .socmed-grid { max-width: 1000px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .socmed-card {
+            background: var(--bg-body); padding: 20px; border-radius: 20px; border: 1px solid var(--border);
+            display: flex; align-items: center; gap: 15px; transition: 0.3s;
+        }
+        .socmed-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: var(--shadow); }
+        .icon-box {
+            width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: white; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .wa-icon { background: linear-gradient(135deg, #25D366, #128C7E); }
+        .shopee-icon { background: linear-gradient(135deg, #EE4D2D, #C33518); }
+        .ig-icon { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .socmed-info h3 { font-size: 16px; font-weight: 700; color: var(--text-main); }
+        .socmed-info p { font-size: 13px; color: var(--text-muted); }
 
-.price{color:#1b5e20;font-weight:800;margin-bottom:15px;font-size: 20px;}
-.qty-control { display: flex; align-items: center; justify-content: space-between; background: #f1f8e9; padding: 6px; border-radius: 12px; margin-bottom: 15px; }
-.qty-btn { width: 35px; height: 35px; border: none; background: #fff; border-radius: 10px; cursor: pointer; font-weight: bold; color: #1b5e20; }
-.add-btn { width:100%; border:none; padding:15px; border-radius:12px; background:#1b5e20; color:#f1d27b; font-weight: 700; cursor:pointer; font-size: 15px; transition: 0.3s; }
-.add-btn:hover { background: #0d3b13; }
+        /* ===== MODAL & VARIANT SELECTOR ===== */
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
+        .overlay.active { display: flex; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from {opacity:0} to {opacity:1}}
+        
+        .modal-box { 
+            background: var(--bg-card); width: 100%; max-width: 500px; border-radius: 20px; padding: 25px; 
+            position: relative; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .close-btn { position: absolute; top: 15px; right: 15px; font-size: 28px; cursor: pointer; color: var(--text-muted); }
+        
+        .variant-group { margin-top: 15px; }
+        .variant-label { font-size: 14px; font-weight: 600; margin-bottom: 8px; display: block; color: var(--text-main); }
+        .variant-select {
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--gold);
+            background: var(--bg-body); color: var(--text-main); font-size: 15px;
+            appearance: none; -webkit-appearance: none;
+        }
 
-/* --- CART MODAL --- */
-.cart-float{
-  position:fixed; right:20px; bottom:30px; background:#1b5e20; color:#f1d27b;
-  width: 65px; height: 65px; border-radius:50%; display: flex; align-items: center; justify-content: center;
-  font-size:26px; cursor:pointer; z-index:1100; box-shadow: 0 8px 25px rgba(0,0,0,0.2); border: 2px solid #d4af37;
-}
-.badge{ position:absolute; top:0; right:0; background:#e74c3c; color:#fff; border-radius:50%; width: 22px; height: 22px; text-align: center; font-size:12px; line-height: 22px; }
-.cart-modal{ position:fixed; right:20px; bottom:110px; width:360px; background:#fff; border-radius:24px; box-shadow:0 20px 60px rgba(0,0,0,.3); display:none; flex-direction:column; max-height:75vh; z-index: 1200; border: 1px solid #1b5e20; }
-.cart-header{ padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-.cart-list{ padding:20px; overflow-y:auto; flex:1; }
-.cart-item-row{ display: flex; gap: 12px; margin-bottom: 15px; align-items: center; border-bottom: 1px solid #f9f9f9; padding-bottom: 12px; }
-.cart-summary{ padding:20px; background: #fafafa; border-radius: 0 0 24px 24px; border-top: 1px solid #eee; }
-.checkout-btn{ background:#25D366; border:none; padding:16px; color:#fff; width:100%; border-radius:12px; font-weight:bold; cursor:pointer; font-size: 16px; }
+        /* ===== CART SIDEBAR ===== */
+        .cart-sidebar {
+            position: fixed; top: 0; right: -100%; width: 100%; max-width: 380px; height: 100%;
+            background: var(--bg-card); z-index: 2500; transition: 0.4s;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.3); display: flex; flex-direction: column;
+        }
+        .cart-sidebar.active { right: 0; }
+        .cart-header { padding: 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        
+        /* FLOATING BTNS */
+        .theme-btn { position: fixed; bottom: 25px; left: 25px; width: 55px; height: 55px; background: var(--bg-card); border-radius: 50%; border: 2px solid var(--gold); z-index: 3000; font-size: 24px; display: flex; align-items: center; justify-content: center; color: var(--gold); }
+        .float-cart { position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; background: var(--primary-gradient); color: white; border-radius: 50%; z-index: 2900; font-size: 28px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(22, 101, 52, 0.5); border: 3px solid #fff; }
 
-/* --- FOOTER & SOCMED (ORIGINAL STRUCTURE) --- */
-.socmed-container { background: rgba(255,255,255,0.8); padding: 70px 20px; text-align: center; }
-.socmed-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
-.socmed-card { padding: 25px; border-radius: 20px; text-decoration: none; color: #333; transition: 0.3s; display: flex; align-items: center; gap: 15px; background: #fff; border: 1px solid #f1d27b; }
-.socmed-card:hover { transform: translateY(-5px); border-color: #1b5e20; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        /* FOOTER */
+        footer { background: #0f172a; color: #94a3b8; padding: 60px 20px 30px; text-align: center; }
+        .footer-grid { max-width: 1000px; margin: auto; display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); text-align: left; }
+        .footer-col h4 { color: var(--gold); margin-bottom: 20px; font-size: 18px; }
 
-.icon-box { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
-.wa-icon { background: #25D366; }
-.shopee-icon { background: #EE4D2D; }
-.web-icon { background: #1b5e20; }
-
-.main-footer { background: #0a3a0d; color: #e8f5e9; padding: 60px 20px 40px; margin-top: 0; text-align: center; border-top: 4px solid #d4af37; }
-.footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; justify-items: center; }
-.footer-col h4 { color: #f1d27b; margin-bottom: 20px; font-size: 18px; position: relative; display: inline-block; }
-.footer-col h4::after { content: ''; position: absolute; left: 50%; transform: translateX(-50%); bottom: -8px; width: 30px; height: 2px; background: #d4af37; }
-.footer-col p { line-height: 1.6; margin-bottom: 5px; }
-.footer-bottom { margin: 40px auto 0; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 13px; opacity: 0.7; }
-
-#toast { visibility: hidden; min-width: 250px; background: #1b5e20; color: #f1d27b; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 30px; transform: translateX(-50%); border: 1px solid #d4af37; }
-#toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-
-@keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-@keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-
-/* MOBILE 2 KOLOM */
-@media (max-width:600px){
-  .container{ grid-template-columns: repeat(2, 1fr); gap:14px; padding:10px 14px 80px; }
-  .img-wrapper{ height:170px; }
-  .card-body h3{ font-size:14px; min-height:38px; }
-  .price{ font-size:16px; }
-  .add-btn{ font-size:13px; padding:10px; }
-  .cart-modal{width:92%; right:4%;} 
-  .hero-slider { height: 300px; }
-  .slide h1 { font-size: 28px; }
-}
-</style>
+        @media(max-width: 768px) {
+            .hero { height: 400px; }
+            .hero h1 { font-size: 32px; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .img-wrapper { height: 170px; }
+            .card-body { padding: 12px; }
+            .product-name { font-size: 14px; height: 42px; }
+            .product-price { font-size: 15px; }
+            .btn-outline, .btn-fill { font-size: 11px; padding: 8px; }
+            .socmed-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="trust-bar">🌙 MARHABAN YA RAMADHAN • SEDIAKAN PERSIAPAN TERBAIK UNTUK IBADAH ANDA ✨</div>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">🌙 Navil Healthy</div>
+        <div class="cart-icon-nav" onclick="toggleCart()">
+            🛒 <span class="badge" id="cart-count">0</span>
+        </div>
+    </div>
+</nav>
 
-<div class="hero-slider">
-    <div class="slide active" style="background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20240125/pngtree-date-food-of-ramadan-kareem-night-image_15569417.png');">
-        <div class="slide-content"><h1>Ramadhan Berkah</h1><p>Ahlan Wa sahlan di toko Navil Healthy</p></div>
-    </div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519817650390-64a93db51149?q=80&w=1470&auto=format&fit=crop');">
-        <div class="slide-content"><h1>Sehat Alami</h1><p>Jaga stamina selama berpuasa dengan produk herbal pilihan.</p></div>
-    </div>
-    <div class="slide" style="background-image: url('https://img.freepik.com/foto-gratis/berbagai-kurma-kering-atau-kurma_114579-64536.jpg');">
-        <div class="slide-content"><h1>Kurma & Pakaian Muslim</h1><p>Persiapkan kebutuhan lebaran keluarga dengan kualitas premium.</p></div>
-    </div>
-</div>
-
-<div class="filter-section">
-    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Cari nama produk..." onkeyup="renderStore()">
-    <div class="categories">
-        <button class="cat-btn active" onclick="filterCat('all', this)">Semua</button>
-        <button class="cat-btn" onclick="filterCat('kurma', this)">Kurma</button>
-        <button class="cat-btn" onclick="filterCat('kue', this)">Kue Kering</button>
-        <button class="cat-btn" onclick="filterCat('pakaian', this)">Pakaian Muslim</button>
-        <button class="cat-btn" onclick="filterCat('makanan', this)">Makanan Sehat</button>
-        <button class="cat-btn" onclick="filterCat('minuman', this)">Minuman Herbal</button>
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-bg active" style="background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20240125/pngtree-date-food-of-ramadan-kareem-night-image_15569417.png');"></div>
+    <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1519817650390-64a93db51149?q=80&w=1470&auto=format&fit=crop');"></div>
+    <div class="hero-content">
+        <h1>Ramadhan Berkah <br><span style="color:var(--gold)">Keluarga Bahagia</span></h1>
+        <p>Lengkapi kebutuhan ibadah dengan koleksi Kurma Premium, Herbal, dan Busana Muslim terbaik.</p>
+        <button class="cta-btn" onclick="document.getElementById('catalog').scrollIntoView()">Belanja Sekarang</button>
     </div>
 </div>
 
-<div class="container" id="productContainer"></div>
+<div class="trust-bar">✨ ORIGINAL • PILIHAN VARIAN LENGKAP • KIRIM SELURUH INDONESIA ✨</div>
 
-<!-- FOOTER SECTION (RESTORED TO ORIGINAL) -->
-<div class="socmed-container">
-    <h2 style="margin-bottom: 40px; color: #1b5e20;">Hubungi & Ikuti Kami</h2>
+<!-- CATALOG -->
+<div class="container" id="catalog">
+    <div class="section-title">
+        <h2>Koleksi Pilihan</h2>
+        <p>Silakan pilih varian ukuran atau tipe sesuai kebutuhan Anda</p>
+    </div>
+
+    <div class="controls">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Cari nama produk..." onkeyup="renderStore()">
+        <div class="categories">
+            <button class="cat-btn active" onclick="filterCat('all', this)">Semua</button>
+            <button class="cat-btn" onclick="filterCat('kurma', this)">Kurma</button>
+            <button class="cat-btn" onclick="filterCat('pakaian', this)">Busana</button>
+            <button class="cat-btn" onclick="filterCat('minuman', this)">Herbal</button>
+            <button class="cat-btn" onclick="filterCat('makanan', this)">Hampers</button>
+        </div>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+</div>
+
+<!-- SOCMED SECTION (SUDAH KEMBALI) -->
+<section class="socmed-section">
+    <div class="section-title">
+        <h2>Belanja Lebih Mudah</h2>
+        <p>Kunjungi kami di platform kesayangan Anda</p>
+    </div>
     <div class="socmed-grid">
-        <a href="https://wa.me/6281286467275" class="socmed-card">
+        <a href="https://wa.me/6281286467275" target="_blank" class="socmed-card">
             <div class="icon-box wa-icon">📞</div>
-            <div style="text-align:left"><b>WhatsApp</b><br><small>0812 8646 7275</small></div>
+            <div class="socmed-info">
+                <h3>WhatsApp</h3>
+                <p>Konsultasi & Order Cepat</p>
+            </div>
         </a>
-        <a href="https://shopee.co.id/ai932store?entryPoint=ShopBySearch&searchKeyword=navil%20healthy" class="socmed-card">
+        <a href="https://shopee.co.id/ai932store?entryPoint=ShopBySearch&searchKeyword=navil%20healthy" target="_blank" class="socmed-card">
             <div class="icon-box shopee-icon">🛍️</div>
-            <div style="text-align:left"><b>Shopee</b><br><small>Navil Healthy Store</small></div>
+            <div class="socmed-info">
+                <h3>Shopee</h3>
+                <p>Navil Healthy Store</p>
+            </div>
         </a>
         <a href="#" class="socmed-card">
-            <div class="icon-box web-icon">🌐</div>
-            <div style="text-align:left"><b>Website</b><br><small>NavilHealthy.com</small></div>
+            <div class="icon-box ig-icon">📸</div>
+            <div class="socmed-info">
+                <h3>Instagram</h3>
+                <p>@navilhealthy</p>
+            </div>
         </a>
     </div>
-</div>
+</section>
 
-<footer class="main-footer">
+<!-- FOOTER -->
+<footer>
     <div class="footer-grid">
         <div class="footer-col">
             <h4>🌿 Navil Healthy</h4>
-            <p>Penyedia produk herbal, kurma premium, dan<br>pakaian muslim berkualitas untuk keluarga.</p>
+            <p>Sahabat sehat keluarga muslim. Menyediakan produk sunnah berkualitas tinggi sejak 2024.</p>
         </div>
         <div class="footer-col">
-            <h4>Bantuan</h4>
-            <p>Cara Order<br>Pengiriman<br>Kebijakan Retur</p>
+            <h4>Layanan</h4>
+            <p>Cara Pemesanan<br>Cek Resi<br>Garansi Produk</p>
         </div>
         <div class="footer-col">
-            <h4>Kontak Kami</h4>
-            <p>📍 Solo, Jawa Tengah<br>📆Senin-Sabtu<br>⏰ 08.00 - 16.00 WIB</p>
+            <h4>Hubungi Kami</h4>
+            <p>📍 Solo, Jawa Tengah<br>📞 0812 8646 7275</p>
         </div>
     </div>
-    <div class="footer-bottom">&copy; 2024 Navil Healthy Store. Solusi Alami, Hidup Lebih Berarti.</div>
+    <div style="margin-top:40px; border-top:1px solid #1e293b; padding-top:20px; font-size:13px;">&copy; 2024 Navil Healthy Store. All Rights Reserved.</div>
 </footer>
 
-<div class="cart-float" onclick="toggleCart()">
-    🛒<span class="badge" id="count">0</span>
-</div>
-
-<div class="cart-modal" id="cartBox">
-    <div class="cart-header"><h3 style="margin:0">Keranjang</h3><span style="cursor:pointer; font-size:24px" onclick="toggleCart()">×</span></div>
-    <div class="cart-list" id="cartList"></div>
-    <div class="cart-summary">
-        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold;"><span>Total:</span><span id="totalPrice" style="color: #2e7d32;">0</span></div>
-        <button class="checkout-btn" onclick="checkout()">Pesan via WhatsApp</button>
+<!-- MODAL DETAIL & VARIAN -->
+<div class="overlay" id="productModal">
+    <div class="modal-box">
+        <div class="close-btn" onclick="closeModal()">×</div>
+        <div id="modalContent"></div>
     </div>
 </div>
 
-<div id="toast">Berhasil masuk keranjang!</div>
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h3>Keranjang</h3>
+        <span onclick="toggleCart()" style="cursor:pointer; font-size:28px">×</span>
+    </div>
+    <div class="cart-items" id="cartList" style="flex:1; overflow-y:auto; padding:20px;"></div>
+    <div class="cart-footer" style="padding:20px; border-top:1px solid var(--border); background:var(--bg-body)">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold; color:var(--text-main);">
+            <span>Total:</span>
+            <span id="totalPrice" style="color:var(--gold); font-size:18px;">Rp 0</span>
+        </div>
+        <button class="btn-fill" style="width:100%; padding:15px; font-size:16px;" onclick="checkout()">Checkout WhatsApp 📲</button>
+    </div>
+</div>
+
+<!-- UTILS -->
+<button class="theme-btn" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+<div class="float-cart" onclick="toggleCart()">🛒</div>
 
 <script>
-// DATABASE PRODUK LENGKAP (TIDAK ADA YANG HILANG)
-const products = [
-    { id: 101, cat: "kurma", name: "TUNIS MADU SAPPHIRE", price: 245000, info: "Netto: 5kg/dus", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhdsbI04IEMU4jzATo-bd_wHam1thVKYjHxFDy4pmVHzQlhf888o0m_5QYhjv-Q9QFxTLQDMZJi3R7zPlX-9A2MQyYH_H6veA4Vwfji6L6ajlPXn-pV8z33LwNubO0oT5KeOEf7fu_no8VuLh49gs6YaI5Dp3gJILEfaCD-bbLGvD7IAIkSGOCXsCXmyas=w455-h455", "https://blogger.googleusercontent.com/img/a/AVvXsEhESiKD2qQvP97zz6_mAjanB7db1l0RzdeMDqy3Rbztj6TmWcWHKqiTkZ9ZqNOfAaLy8m8Q4HM0Mhff1RCN1xBEzl86kTMFk-m9-eA7kedcUcwCPEtvRebDx-IoisEXXReLutOfBEcKfLzrFGqe96gbrTnapWq1W2hsGtfq0yOlWUidA1pymoN8Cnhmm3M=w409-h545", "https://blogger.googleusercontent.com/img/a/AVvXsEj2smvVhUo8PTGLPldwVl2XVgfhjb6e5iuxZ1NrSXuxTm6af34pv41E82QAzjlHOd9vF1DvOVEQLUuci2sK5Gw2gYra8eQFt_vo69F6i-NCfKYpowNGKJrEzEaZD4810koRzRVMcYROKbzpF1JQxq3BrYQJqC-TjV_d_05-h_u_N1pEAwlay5dOT-8fpZo=w426-h568"] },
-    { id: 104, cat: "kurma", name: "KURMA MESIR GOLDEN VALLEY", price: 260000, info: "Berat: 10kg/dus", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiKLnUdCQ8PzJ3giiTBCPiYYFRCLrq4HsOIXqsDWUEA7TGeDzgAsOVuT6WawIro4SeHCCOF14upGdpytfjit7p_98SbPbP6fffLmZOJNTlpO9h8X5Mi-kym0UOWeTBmY9UEkeK4HdzgxHwHOCqK3l2O30vr1bgkymcfhC00rNV6_2ZkmGl2cxibErSgXjw=w350-h350", "https://blogger.googleusercontent.com/img/a/AVvXsEiJNdc2fae-0VSB6rJVOm4bHHdgYj9MUKYnLEdOmehxliEU2bjEZKxCHWlHc14IAOgzsXYeAdiN9sa31oeYRiYZ7oRKE8QEsVgZUMylEJD2fGyrQcKDcdW62jS3LOyK8mbQOrDH2XjlRqYxgogXRYq33ZU2H_kDvpCqUtTWsyyPi5dVs0Q5O-I7i35JoG0=w356-h356", "https://blogger.googleusercontent.com/img/a/AVvXsEg8YKPE4aju9hUc-H4_I-KoDgzDZJ8PHHduQgMqhROhJley_j9diq8bRxAJuNO1ERN0gEBc1wwQ3N2YCdQkAXpOD8som1gJXj15rn0Spee8MDlH2RqJQGiJt7WK-18nix2oEkAjFmtGw70hAQcs1WE4IfbLb4NVRdff6yAnqICS52fsMO7izLf8rPfjHtk=w351-h468"] },
-    { id: 102, cat: "kurma", name: "TUNISIA TANGKAI CURAH AL-FIHRI", price: 290000, info: "Berat: 5kg/dus", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEj9FtjFrVm6G4__hmOsL7McvBPaWyjt35kWc3OnBBLkLFTaa4ROfczqfCr4r5KGMKaP1edYneHDrfGHIIo-rwwoDvQgj-XreHOy3on3RiET6AB5O7n-va2WoFgjIGr3-ZAhvHF81UZMClKOXiKkwTfiTuuFL554dmcFtIf5TBSwJXCKf69juc0xjB_iuDw", "https://blogger.googleusercontent.com/img/a/AVvXsEhPoM4QbR3Sa1SdXyNC8giz7t_ihR9x945mCaVW3gJGnO-kfzHK2_eFyP4z-JPf6lfoq1txSTucq1tDBV8LJ6fhiZaue77dPKJgkSyG_7w3jWHObLpAH5DoK7ioIeObN6SmCwN0gY7Qj_WSQmV2rh2ycoDC-IN24E4I82YuuRHsGX52osdlKffk9pbIoNU", "https://blogger.googleusercontent.com/img/a/AVvXsEh-dd7CuTLwOCvi3PTJj8UNLp1M1UatP893YfQz-tZ3jgDdQnk6klSx_4fHqx1EtVHGcSuddLYrAoJrpMNvH3g_Nnl9JymqdgDUtLjBm7e_5Nf-R8bNWnttqhC85SuyH5Mz01yjSd4SK-MbqToH7vT7hal1Sz9R45KG69xzrxsmeOLoWAI7ybNAo2AEEfQ"] },
-    { id: 103, cat: "kurma", name: "KURMA SUKARI KEMASAN EKONOMIS", price: 65000, info: "Berat: 700-850gr/pack", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiSJQddn4KLrvKRATqaTUIKd4HeUm0CaV1gvFoV17m2zDTZsiWVlCk9P1LIouv84C6V9ku1hp7ERahwXtzSBzOudsfKVVJxW3Kr0D50ivOBavfFkxg-Z0o-vKcGDFwCexbP4NBUZaD7IKyTdHGQzgJjlhGvBFKKRXLVqJaXE14R6ciQZtWfBodeSoYvvMY", "https://blogger.googleusercontent.com/img/a/AVvXsEiZAuu9WuIGOIubLsfDNLFWRLCk7Jv1Tb8BVvgDH56LVZfy4EO8aoo5vhVUAWGfhgKGStzi9IzdQySo_I6ypY-TpaURbyQU4NOEQ6sAUjNCQYawStxcR9GmXiyWMUHgqLoeZzUvOWDxObEN2m6i08BmUZ_QMTvTWHv8YOCRploiqHiGQqORIUnpjYGAfZE"] },
-    { id: 104, cat: "kurma", name: "SUKARI DAWANA KEMASAN WRAPPING", price: 45000, info: "Berat: 500gr/pack", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEjnYbbkmQjHXDJ1Nhktf7D-wfoyG14gafPU81x7bGorOXS_BpJEIoHkQKrQuzKMTNBXBGTorgfrnSTPckTQNFFyeOpo4fTqR5HheBrknTf-JQI7cjQVEAG95q_iGRDbFFtjLgDYiB7R2HJaWxXwsMlHmyeY_zKP2wWvsTjUwlQdkrM8zgtUlCrUoEkSnG0", "https://blogger.googleusercontent.com/img/a/AVvXsEhox21ekr4hbU5qKnwZR199JAUkBYV0AmyYqSqPLTxRiNQjqtfZXPO6ZmKA7LZURLiAU3A-u_B-bIgNWiepcskZL_PDlezGXKUl0MPnxkaFW4b1aVBjrnPmv7yPAQ4jtM1GkiLaCBeRYRKBX-UTyblDQ7psrR7W3RfwgM6OGLYL76V6fO16OJqE57PXP2U", "https://blogger.googleusercontent.com/img/a/AVvXsEhK2KXXaXx7KJWq_3IQI7sF3eAuKXW7cUcBQ2HJG9HUKhmtYgFQFYH9tPB2KB9RX173_JyE2RefdCvgEcOIwUIVecVhOUyN_w71c-AnxiUxG6sXXg-ziqcC3sa8ozmjCt0iw63Bo96ygN8AXVhfc6m3ehS4R2myOLriCVNt1vSYWvSb_rGiY8FpEKB0yAM"] },
-    { id: 105, cat: "kurma", name: "TUNIS TANGKAI PALM'FRUTT", price: 75000, info: "Berat: 500gr/pack", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEjhdxvMjtQMYX5-fouO_OJ1ysY4nhutSkCYUWrEAGNCvnVyVb1WwDU5sZD493rtmLQVLggVmCD-Tpql6ML4OpeurMHchp_MB98u7_a01cXf0NAxtUX34plne1TXe36W-3W-I9vx5Z1OrNiCF_KdT-qqKH3hzv16tExTp0sNtmmmQ8WwlsCMJwlh0UcUtIg", "https://blogger.googleusercontent.com/img/a/AVvXsEiuSe7hXk_MFEKyfAyZNHJjCw4KSFre3iXG6ZL4sxVtaN10K1eKCPZ5xbYAidksCEQzvRP_ZzI8XvgKv-WC5MoORkDiLQajN66sIx8oPhtIpQpmm0wxiS9Q5p48rCnshHKi2YPy0IJ_AejJLpqGfc_wli5GaJKZrxVVtQTw9clykSg6-2YfRF2FEC7lj4E", "https://blogger.googleusercontent.com/img/a/AVvXsEjaj6cBlNQaUyJ8KO9pIUkfUEAtVLtjHxnC8AJG2G9nkohyf-gpkQ6UFOp8QYCIsHLG79eUL51ypuZ-6r8WDpytOsIXNLvje9ZUBRfSSPpmBEpyJjYOk_QZ6Qq1XyP-7yaUoWjG5fVNf6ItA2JaTWpXtmIvD0BuDvT1k51yZAV9IksDwMaK62ZQ-N2oWP0"] },
-    { id: 106, cat: "kurma", name: "KURMA AJWA", price: 70000, info: "Berat: 500gr/pack", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEge3ETojmZuh7crBuUnDZ6vbL-yWPqtjYmvrhOs0kUD8NbP4K9OMh4zFXUQ0QqwjE9tjnhP6SA8UOkfj78qu6lhb_1U3dQ0qGCiJZEsCN_z8BEIaJDL8DCvi_fbHqsGg5uJ5thk29fIPAeJrAbu1CPsRlR_5NxqZ2PX2LJ4YrUFnXjbNJJMYKAmJIB1kSE", "https://blogger.googleusercontent.com/img/a/AVvXsEjUT1guhNoBhTj4wt9QykVytAds9H45MOs6apG7yIr7ivDUZvv2mZhvfZ3VZ6uZtbaRXwvoZhVoUSe-wEED0taTiQsEoxMsSRmE8-lO_sTHRUH2XRJCd5m0x8oqO7m3RhlOiA1ECEwRNpc5xAiFOvx7p_ykITWZ2Bi1kTNiM7Z2IH5HgAd-aQDPi_Veqks"] },
-    { id: 107, cat: "kue", name: "NASTAR PREMIUM", price: 85000, info: "Toples 600ml", images: ["https://img-global.cpcdn.com/recipes/59e7a8f1cf88c4ec/1200x630cq70/photo.jpg", "https://tse3.mm.bing.net/th/id/OIP.ZRnG0jYciXDlKAgCIGS7-QHaHa?rs=1&pid=ImgDetMain&o=7&rm=3", "https://i.ytimg.com/vi/7K1PownR28w/maxresdefault.jpg"] },
-    { id: 201, cat: "pakaian", name: "AL-NOOR PREMIUM KATUN | MANSET", price: 320000, info: "Size Dewasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhTYJyYg0KPrRUhBNBbRS26infGZNn7t8CrKKAC1b5KI-vHQDfxoqWnuVqzFsXDQOb43MUDAfUobOSqdz9F-Js3x7diiszevX89nxORLmyjZjeNwax2uz5JbYJC1grLiYfX4KQcgHxsvqlY38q0u1hzJmhuQvhjzBwt3xeOOZ0d-L5_LHS4_9cIUTvgwr8", "https://blogger.googleusercontent.com/img/a/AVvXsEixLfWOVE8vl4B6Zw7WFQ71vAtSJXf3q_ImHROFhdItvdZaJC5B0xW8RO9L1vum-RhRDK-VeKnNT8rnSMmovxLqPV20pSZrWmMqm1y2Dz72OV0Ol-R-ifp6Bl7InDmkU_HIsSi8ut_JxH_X_JObPH9EeIjK_kuY1RbkKmeNyBPd76gL7qCGOjbj_c_DL0M", "https://blogger.googleusercontent.com/img/a/AVvXsEjVeaKlvjKg4JCZOaucCxFWhaisWXI7of3ZtZFs1Brl21gloVa3a4VPpeOk5z_E9-RM8iXdcclyxIlZsb5lHMTtCgP3Nsmas_bgQWYBWYreHgn5CstbLsWvKWBY1Jgm57uEgmfcoFwXGwSCh_zFxkxYboxMku2LiYfnF4GjDLkeoR6WyEJJafpJkYIS6Hw"] },
-    { id: 202, cat: "pakaian", name: "AL-NOOR PREMIUM BORDIR | MANSET", price: 320000, info: "Size Dewasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhSsfQ3VWDqD3XzQEROlRhhxT6-PDBjJy_cjLPlAWrkn_U5hWZHa5trJMj4BIjNeXFgmunj3Ee4YTVHjnHSelcD1xra0Wl-IhGPXtLRnJPFUTUnG-zrJ_yRBskmStrPnIIYNQNXY45eWpcFRKmqE-VNudukyn0p-qu3ZgH8fXtpjNdIqg0X4TEFUZgW08A", "https://blogger.googleusercontent.com/img/a/AVvXsEg4epp4DgoDppqzx56b_-S3Yl1WPAb6J88DsgyB7aKuvyILHGccH3XIqISSPZTaApNvzHWd89RBDfQbxlPgPiHuY_sxA9xnuFqA6aO3CSfu5cFyq1ZQTTHl849n-zn3oecO0Q9fkgKdKwtTwA3kS0sHSqL1aaybHcS6RAIIjXxcFnUWCjl3Sv9iI7qm2yM", "https://blogger.googleusercontent.com/img/a/AVvXsEhal61CdGctr1_7eN7MOiq_wCqelRKcfPd7tSrCFGsgLxol0rR7gS-qVa2_kH-58GrHStChcgn6RFoC0gnoZWkU8X7jIflvqJC1TEsQ8nAOcF9U9-D58wM-Uc9b6JAWW3OFrIWXQWCOuUxNUqlgsURbbu0iBO1Mz3SDjysEGqi4Sp8Cs_Z_oJexAYnEp3Y"] },
-    { id: 203, cat: "pakaian", name: "KOKO FAHAZ", price: 200000, info: "Size S, M, L, XL, XXL", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEixqbGLkoqw4g9mMbGKN7Tj5Q3_a9sQM6fQXPiE_yQc4ZGfP9Ow58DKejcWIWm-4RTzkwZlmLyCNq_ZstBTrC7MqqdM20OOIg2auxSpQfvORSUWaWWOl2qcwN3JdOLm0LF-plOJIsCCRPACuOdX8HUpH08yZRlWDDt1vBHR31H_vFMc1XODOJVniecvkPc"] },
-    { id: 204, cat: "pakaian", name: "JUBAH AL HARAMAIN PUTIH MANSET PREMIUM SERIES BAHAN KATUN", price: 350000, info: "Size Dewasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEgnTfb16kmRPNDVflf77n0hRK4mPXElgegoDIu8q0sHPSgUuSBI8sQ0AX363MxUiwEMDwJnHEaD7-H7fDjn2CCf3mAfvBYivYV5rQIjvR0dY3eZFyv1FSteLSYRAW688tDNHAcA6ig7uMTTwRLjJs6z6mz7knJuNN1uZOn_LGkqEed0b5zfKStbnq1qJqw", "https://blogger.googleusercontent.com/img/a/AVvXsEjIlzscQoMDDvmhsJPey2U3LwZaLHqUXoKnNc1ydnoji7PHp4CBkuOEWcsi8A2kesMphpw7xMy4ctnFaZho4FckM_Mo_yFnEcxc-rOH6sDEO7_6iFZALgC3euWXgJMFiEOXJfL3JG8FdyZm6kcsbkyx5TtDpZ7qEBLNmZLintyIbdYcbIX3OKwfAnj1-TM", "https://blogger.googleusercontent.com/img/a/AVvXsEhOZxzOcEjYKKDJqeX2YlE7Lxj4br3k3cpbqisqXKue1x8Vr6EGB_dt9K4ri1ecpgpSNZCs03twXKdieEr4QSoEnNvM4V1L7hQopmVERDQXT0t-u0LV-qnZSvSpP4qR-ws6mCwEFnvFafQZhgQF5PSLZtCPPuEx1ojqGzBnOqkZIw8BCQSM-1UbUqZRfhQ", "https://blogger.googleusercontent.com/img/a/AVvXsEirRmpEFouFGd4eiSEQ5oCcHAgAX03rqnJ202Sj0sIyrUNU5KZaFWi0Z3gNwaWUTqPadcw-S70ApXHinexp_vorbJG-lYpQ4j4X7NxfJ5QGyA-QmnjmK7AwKC69NFHbCw1drYZPQF6vSQyx1uo3KrfDpoCmGQ24Wi8VycUPoia7K4_AF6uxrJ_TVN6n-AM"] },
-    { id: 205, cat: "pakaian", name: "JUBAH AL HARAMAIN SERIES PREMIUM HITAM MANSET", price: 350000, info: "Size Dewasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhcEulIUvfOKNvHRd-WWkmQkFCay-cCY71Mbo3HMxBlbIbu7DcHF1Wnm9CUcu9qJtoY8ALvAEc4IlXtxFjTVbZuxlqcnP1ijDcCD0A6J6uezzae-PYxLdnDQeY91Vpo2Zps4oliN37h2eI2t8SQcTWgsOabmWX3DvXbSCuIgiYkicF-unikbLN_yNBrFMo", "https://blogger.googleusercontent.com/img/a/AVvXsEivWSLlcvd5JJEN--vkvG-rj7sJMvLvdUlVM7ZJeeR7Np8CB2X_4yYjOUL8KvoiPagonxFAxM5ypEzXbjzONTOW-tvpg0WimoCb-fLSI9RoNqzE06HC9RtY01_7XiURSJFIhc2Fhinvc6a8IM1eDy2-po2M2hAGlLB5tJbrQvva_qeJ-zdixnBmH68LF80"] },
-    { id: 206, cat: "pakaian", name: "JUBAH AL HARAMAIN KERAH KEMEJA MANSET PREMIUM SERIES BAHAN KATUN", price: 350000, info: "Size Dewasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEjMReOEhWMNkn_cTvTUyfqHQyrqbVf7NMNP-JaTurxgEOaZc4U0LSXLJnQdMuZ-JWwZiUS2C_XIajthUDOhePSjP7pZl4d1cdda-PvORyMvsY1YeaEfAZAttvVKe_E2d8AgUVf3DDOnFvLPWXpvm4Ej7bx5KSAMyIMOiHOYHuzA_ggmWdpLrEt2B1Bu7KI", "https://blogger.googleusercontent.com/img/a/AVvXsEjSg169q1jN93nLEUw8LxpktXOCCcZt3B0Iq_BCbJLM2MDhYQIMfEmkONbqnpWCc9FoAGjM7EChpwWfoUXNiCheLFbUBx0QvN1iI8TipxrKZe37pejEwoJhQ4fBCxXFHEWF4-sFsylQAl-QuUIOZj9NA6hBZFmLCWp0eoukc67osop5nh9NKR5rBcgRCnM", "https://blogger.googleusercontent.com/img/a/AVvXsEjjxgv2q5ceM_Yoby2i-uuhQj58vZHl2QaA24qKCQ-PGz3g2Hl3mzguF5JrLV5jHF2wol0FP6mYD6FNaKk9yWSR5W20LGxytI_OEucuqSjI1FDZ2xDrQ2rBqT6RFMpbpb_d0NTSsjUyGgaR_l2mafNOIZKrHcUQVjmonZw4LNmYyfAd59lqqya2OpgoPg0", "https://blogger.googleusercontent.com/img/a/AVvXsEii18YdSPkHK2Ue7B7JKE6XoTHNHVOOL7QbsLvulrjGxOPB056JFn2oTnzmq962yVC5OPi_qAQg-XdtvXs-b3K99ZXIWFkPiOMsfBG4KRTb5lzo8-BqJbwa2mzTaQrS6_Vc9Izir7JUsuiNhmS5sdEIM1wnWMI6f3M76Vm56Jc_8JF2FZ1WFThjLVZpAFE", "https://blogger.googleusercontent.com/img/a/AVvXsEhu7nLTW7KsEWwxA6g0tJX6BX5ntXl1qVPfJ7fELX8cO0njXYhVf7aiHduKxW0tR4rLVX7NdWSKsr3VZoy9CkXn1-BTkDfSQQOdIU43tVkxBW97MquzTk-qw3-SAOJc81ZNETO1TzpSVDlG7v4qfLAoNy4Dlx66O0tNpRFvgZf5qijbaxOJhwq0Ib56E3U", "https://blogger.googleusercontent.com/img/a/AVvXsEiFrpyw_8Lw92Ac2o2ezOMfJAzHCTDdULQz2TpMa98cK5dvh2csIceB_-0DLkLA7CGYzpYBUAeGeTHZtw7Mts3k9ajUb_zl__ELa0ATNmHVfPmY3Un9S8m-GPO5VWwYzuYperqI_3ZANnFA8gVh8PH9TxybVvB29Wzbx-VdgvNaiw94UV1dc4ZlnyuTU7o"] },
-    { id: 207, cat: "pakaian", name: "AL-NOOR PREMIUM PUTIH | SEMIWOLL | MANSET", price: 350000, info: "Size Dewasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEjQpMEmhlcFUc8aEzsPWkEcfMV_IjftqqQTo5j_QrxOG0tFScnQXYnQpTvj-FUrtu3lQCNZ2IjEVdnVD-lGsRgCDCDIR_FZTZ7SfodcFkOxWn7sLWldTj-krpBt8vAFcVC1Pb37jU3KpEWjyH5lTt38UGmE-AcPT91gtSLTF5BoAWCTewBLerz7GmsT2HM", "https://blogger.googleusercontent.com/img/a/AVvXsEh_8X0pDrS0EV1NgJzde-2_FqWEZNoNke4UIPdhzhOiZKhFq6acUUluL5v5xS8tGq3eLeATeqdJs7xyGkhgWHsjMyoDOYqqoG_BmbkLIBlxe8G2Uxf5IUGHgtWj94mZyg7wKWxOoQC2YG3jeqUPGrTBsarueYn9_X9j4nH1mxxwE7EWvooTJj1HoOEX0qY"] },
-    { id: 208, cat: "pakaian", name: "ALHARAMAIN POLYESTER PREMIUM", price: 350000, info: "Size Dewasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEj4NGI9gHwltiX3Dhpi4CZf3lKJV771UaNM8Xkc7thdeevB38JgF63OlXV6UIxrdHcTq47x-qU_1vBTo_-W3aRPiAA_UvSyIKhcGiI49xc3bKZBso0Tzk7bzWNx1_0AW2mgqZ3yDjjIpYnWKZCnaYcpa24o8uc-n_j79k9FGefl20LPnaDy0LQIHbxr-s8", "https://blogger.googleusercontent.com/img/a/AVvXsEhrtDbJVScVcBaoelm18Qjo3J8Je-t1MUgS5eQapxMqHpEJFE_rg8_fcW6i8T5QKfO0A9tlW7McUmb0akXoCtWthUsWhe2RhwSkrlmY52yxEBZI1H0XD62r_1aMQeAJW205S1SMvr0vPCEWa_JIGTnxe9b1rFRFKZ6NNfy1aAQ6EkOTuxF1YfZZ4529M0U", "https://blogger.googleusercontent.com/img/a/AVvXsEgwKf1j3wh5Bqv9jGZuJ7dVydaZe1utuuNVURY86Xti__kiR9-y9qbRY-Psdp0qeXdlfHJAPvLbbOek2frK0mJKeTptCSz_0mySkjNNzzYJLo4qzZYY-Nb9cZ7GORsAzfeNwPy9HOXVHcW1NEK0le2RK8abEzPmXo-NKhHcuFQDqtpxAR6MM9Iy8uIRsy0", "https://blogger.googleusercontent.com/img/a/AVvXsEgqgwCa0do-9YF4dBoLmQetWObmWnGoMuHV685YMAqt-YYrB_Nhm8CNY7duLjvEewyrEF6pTeSRM8F8Qxsjac9zxY3IPYeYA0V5TEkJ5JRsj9wLMaHkIbtqLR3KvJzVomhu1qkqlQW0d_bO23myiMwqnO4GAXPW-k4pxiJNDw9zBruqGFdzOXKrXlyy0jk"] },
-    { id: 209, cat: "pakaian", name: "ALHARAMAIN PUTIH PREMIUM", price: 350000, info: "Size Dewasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEjfoSCWTgvsce0EDCSMKtBQyOc6XTuehdqMWBl8mxQJZneWw-FhLJvIoegM-eFjKs2qHQYngO_b1bDDDtf_w9chfMw5hZ-hok4RG0wmQ3BTt3rR-xDLvhFwlmd42-G_9YZh7q_EMimzs3qerAOJJRY3FQj3H5oL90MP7npqqt27O2SJz_M4vKjVHUxLP10", "https://blogger.googleusercontent.com/img/a/AVvXsEiUpJL-ldg7mmE7baOcTh8tlsfh0abX8nj4gl9ybjc9mKlp21neRO5WqIwtdd8iqy-FPojeJxWjacCu5w-Px4QWBTEewuoJSjg3vZYtYvtWaNd2xkCxkvMeXLPTF9byFEJXWb7mzIiWNcjSAJ9apJzzWSyzHhWuX1R2CqRIgYxqJNo7mPC2Zn2ZZQ4hP9g", "https://blogger.googleusercontent.com/img/a/AVvXsEhLHWp8fWdpjj1R21MEczTzytHJ5TDDLIIGnuVS3ou-YqSYC-EOzRM_UQpiZASGMF9b-wx-cOc2vea1QEEvMB_U7cOUgDT2Ra-kNgnW_fH0lyOb_FROVcRrzlsjBBFWFqbu2HthnmXDdFLV2AXqp8cwTTxETT8Bg35cCzUp8gqgXh_95czHvbw03kqXbAk"] },
-    { id: 210, cat: "pakaian", name: "PECI RAJUT AL-BUKHARI", price: 10000, info: "Per pcs", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEgV3zVhNv2scXlfSr2KSSQ3Xr0CUCAMIKcTaMYqBM12Zybk6fO5yHSGQ6pVzX-11n13NPo5y-YM6L-rAq9xOMGK7SrEgHFTON8l2GrG_4-9O_TlRRmOaekekWj7GQS9i-1fg-QOdqenkbFmm2qlAa08z9AwoUh2hMXyT0kK2XvOKbnVBgIzU4h2B-tWxr8", "https://blogger.googleusercontent.com/img/a/AVvXsEjoKAeZXzxfLEsPN1SHEBz6mUvSJE4Mc16wn4s-zsY86mtGnFWLaMkR_QYqg1pug6tOvqaVmr3CJmlWXxOAEya2sMwkoYA3JXRicnFiF_0fRNRexHc49YOlQXoh8PTkBjI38zh-54y8sWpzVz2fNNkgm9SQgiI8j5WE4EdPRScuzIdBNO69trY0Ydm9c24", "https://blogger.googleusercontent.com/img/a/AVvXsEgzJ3PMJvXLO7cC7Plzdt3MVQ7IxzJwDv6Lfz6wiHw7CcOq-9pkDkadLFRvJ0IP6f8n1e0mxpbaLc5ltSeOAh9w8UMECm1ooeNLSZSnTRkh22obXSvhMAcfilTf23p6lIEeqorv1qNz0TLHYuzjWMurDUERB0qJerDDeHOV0VY4rf35sW06ai1x4r-_H3k", "https://blogger.googleusercontent.com/img/a/AVvXsEgA9TN-OnWomO164VLirleivB6TL4QC9Mv3ackjlqqufeAL50eEU4Cc2VXebDWlMxXIro0CV7U2GEbxGHcuCPBSnkAmZ1747-Fk75KRfXepB6WDsh1lsFMMV7NOOi9HS8FLBCOZEAcZnH-OAkVtHOxZttfKiDIbrdlMRFXhjRhjywQ1w1nJ1iVvoH2oSko"] },
-    { id: 301, cat: "makanan", name: "Coklat Turkey TRUFFLE", price: 170000, info: "1 box", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEj6egarq3OMPJkpAvVpmZ_OOc6Xh5ZpGh6VW-JrTcgXWHf9SPSexX-EOt5NJFBkXK_WTAJIVbC_KtncDUxqC8v05pDf8X6J2ieR5Q4Gm67sPxESz49BxEzEtP2PNNgGWvU7JDorZ0Gf3CFoX7gfjM3K9azQLOFr6_1x_auzQKnArOJsMxrAqGp8Rzobr5s", "https://blogger.googleusercontent.com/img/a/AVvXsEiedBCLF2XngdhBw1gLmboGuyziqgH9apJ072R6pHfluf1pUZMS61WHnY23Cuxirhzn7TSY-Gf7nAL19fQAgRedlRYFPHaDMy6yKpRpJ0aAFuzQdvpMvn7iPwgFyeObx2RBh3Al_P_y-HSLvac2f325a2RQ09mL--safhPF-IZUr6GYcLFYoUR_PfMOJqc", "https://blogger.googleusercontent.com/img/a/AVvXsEgmHtlSDGiIMbX6gkGm8UWESeMfG1ah9Jko12v52lxvPyZFBOT__b20r0lGH9y52b7rAzJDZNTawpo0cubsjneE2Td7mnfW0Z17rdPe1XApKRh8rjzmRwkoFEhpwrlN6UACZr0-6ENVgtVQctzDnFfrzYIGeJd5zM7EzmDHj6DHSEgYGHpyohbwdcHgQIo"] },
-    { id: 302, cat: "makanan", name: "ALMOND KUPAS", price: 170000, info: "1 box", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiAi6OceKVGOwgCyFFH3xsa1OoZuTXT50sbRawpSSAdWHLskAj-HbbwWJf-__4hO3U0UJzdc8RhUmbYXeV1GKWlB1zfq2jZo1z5upRFabsAUBBGMV9AwmvNLhcqncl91nJpeQKMx5w2lhFN3O8xiyANnWh054qnc6_wFsJFksPjTFp_0xo0dDDRUwDYmfQ"] },
-    { id: 303, cat: "makanan", name: "KACANG ARAB KUPAS AL-AQSA", price: 170000, info: "1 box", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhBMDi_in_LKwB4Q5t74Bnz4ehLMW3sSrjs5PJIt3HYufpKQBXbLJj2jUJNZK5zSDRqmokD2S0KlEF_OwYADwZAxrewdFxf8cII8YEWpS4wOmoKhT3ZmUA3gg6v_1WFTS3e3cZ__vwS4uVPDqJPFt8ahBhsICjNVDa5wbRl7cSoukBz_R2dkS264LHyO7c", "https://blogger.googleusercontent.com/img/a/AVvXsEj9aqm-9txhf5iceFo7dDdh7OIeLpu4v27gHmVRbryJfKaDyYT8HMn5PoPBdYcT22dqWK9rp-H3kBYOZxwwH1QrNyp0bNC3dftoHbHUDVzuYGIkO8Nd8GXPHugBGUlfRipxa5SSpxA8iQkX4oiy-ufsdJYAOi1e-ptPTgEjOlWJ1Y5iXnH_JJdiHLhZJOs", "https://blogger.googleusercontent.com/img/a/AVvXsEh1HDkrbdNKuoulZq8J2pMibbpB2xEeY0qO5Jw1K0CcoNk5Zflbpqx-gtXwU9aZyLiq3vpWHVCLjwbJU8QlBWFqEm1Fc5kCjE8eO0w7fSld5pjQ7Q0bJS09qi4Rkke7TWECf0-CSIei4mx8txtOnEgImv2aqDDsM6hQj4yUizV31mBX6QVfeQh0Zwswus8"] },
-    { id: 304, cat: "makanan", name: "KISMIS MANIS MALYAR", price: 680000, info: "", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhNwTpAK94MlmFXGf_l0xgcNXP69aScFn9H_JlPOguyYabgBprE6XdWpEC0pCXr6_S8uSPTQhFuhPj3zJ8fp2HiEs4srMKAomiJW0awGUpNeODDruxkVXcCghWkbxgZrv6kPCOy2ZaefWB9h1U2_iPrqsnnfVNMF5BqLqJYFtkP0NFykjAU2zqEcA4Euk4", "https://blogger.googleusercontent.com/img/a/AVvXsEg3Y2660X9Ab8FJ78D7kYhaj6EvtxWhL_OJ9iU8EV6om66mfpW0kwUQVE5zC7RjAFERa6Mr1A_jqMh5MlKEEtnlfhAGo3FQHdDQvKHOFUhuXMqxBUyJfZt4iSrkzOyOZVLoe6QvEBV36v4eNTP1ZGQNdGzIpVH3XFvo10yXryLWN6HTp35_zYRivyz9E34", "https://blogger.googleusercontent.com/img/a/AVvXsEgJZdPUAWONGZsv30ez-kMEYtbwKVjKOJTvHd4nnohEt668EFMxlphHgLeJC5-xvFMZetd7_qowAEsVEfqMAvjgvuOzOemKzR0QrjOUFjB2ZHzji3xwVDPlXXopNP6TkhyOx6l9ONQ5gjNXHkPJXpIbqwzisMvOk4lifEmVJx0TMcjVzv5eQzxFiqErtxo", "https://blogger.googleusercontent.com/img/a/AVvXsEgoqevD2SLJr8UYMjEShMe_EtmE8NJQTwx6Rvo77zdhro4KWGX3-gJyUtXoWJBGKGxjmLzrRFrv-L5OE-j0w4Do2AXGkDCM_3mLtX7cBINBivtqz16dIVOQBuOnuELwpiAtCUZ5nFRe7GgO2JrZOXPBVSDLDNBlRPpE3Vb8RBIAGM4OEjw0U8jw_YL-Mzw"] },
-    { id: 399, cat: "minuman", name: "JAHE MERAH AMH", price: 18000, info: "1 Renteng", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiBFa_q7CtHbFeoVQVJnhxQ5gilGYGbFgf-sPoDmiYqLjpDROAgbnF_X9hTCUnzlH2v-nJdOguivLGZSC0TsOwZ1rjOc8Nf1rB7jBSWf7PnHu9jeRj9NWAKa5bfRf2FUgVx94CvrRFWO0F1pi2EdfMvCx1oo7wPFp-sqbKqK3u8tDQNkjszE4WvjV2wj7w", "https://blogger.googleusercontent.com/img/a/AVvXsEj9L-ZQOC3DqQZwBhC2HqS9cBAepqtgviP8gdtkEYaDfbCt6y4P6kpwZ_ltDu-shZiQ7V7G5rmY_5aQzKydbuGz9qZRHSROFI6kjuIBh1RMaA7vsqRquc8kVqRCOolonV9GyTTmqFA_Ba6m9g56QPp2zNNr4X4NPeCBajkhSuA1izcaMGuBG_wNasq0MMg", "https://blogger.googleusercontent.com/img/a/AVvXsEgRBlCP4QTrWL2XCsbTlL0I1ffWlHpQID3JRTqMnbiZR5PorilTdV5wytBG_ay7iCslSosIB-_5oOBpt99zg9vB9fpWjJVgTO-fRX-0MW4bx2JWVV-qaQivnZ-QbvgeVPaxseuiCDfb6xU7WLBKurRFoYU_hYqUaeBMZEXHRj1h_9-GdaMPDuiOFIYwctI"] },
-    { id: 400, cat: "minuman", name: "Kapsul minyak EXTRA PRO 5 in 1", price: 79000, info: "60 Kapsul", images: ["https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhLqsIgG3CHKNCCRBtFlBm3-2afOYWmckhyTgNtynbHW9edhzK00DVjS2AtTdv2vGGVfB_P_CJRSlrdXVTOvv_Fh_Abgn6zic3mrjJXbIeZ3_KVcD5C2nzqUJmeu4S468ArlevGzhuwPt1kcl56zCNqOIGugzCVAxFmpmE49BcW0oWN-X_ALzwiQZt7EPm/s1600/IMG_20260207_185831_563.jpg", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhbf_8sARSvXwjjhHDC9IOusHyr5OsVo0wvPtuFhLbSq_ZHhV5sMUjaeuUNjJ9QvJ39aczJqwyMc_zwKguMecTogJWQc32iwObxDKIlbc3TwHs8iLjyfcPPkLn85uXA5BhZ6cDW8lyksU6vfIULFimbL5E-NLx4QXiVPzqO1W_P4SlklK4X9JIbhR34NtKt/s1280/IMG_20260207_185817_056.jpg", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiR8-1BWdP1zAk1avq7PYiC6v5fxa9TdSHGhh22s4jHxmuGmNwoDu1qGb-_1x2kTxJM5koTYQIJS2RE2EKWzl-LKM0rTT0wji82lDcD03eLY1nKEGvWI_55d0PRMOMxx4mvaveNYLfD4frTocmY9Zh-hqLqvlclPJG1BeFBK8PtzJIOg0xIgBLahzssr8Qe/s1280/IMG_20260207_185826_137.jpg"] },
-    { id: 401, cat: "minuman", name: "MADU VIDAT KIDS", price: 99000, info: "Isi 175gr", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiuhPcrmbXmPsUf_HBPG1ocBvaIgNOoGI2Q0TTf4pa2a5iEjiaYLNym-dD38Xpbnw1YS__ux_Gh64R6k8p8Yg2D85AWvDJNc_pPnmw_SJFYcTrjSmzOiNAoHVbFXOeNbJvPlk5avBWOc2qu46e8kRDt586bzt-7iRTRC8lB60ehnMSMry8WpVEBJN8aHjSt", "https://blogger.googleusercontent.com/img/a/AVvXsEg30EjqVBFH6t8ifsYzjJE-Z4nWeBuyv6WgsTtfjEKHKgz7nc9CQIQgZ9_Z_WThqqNvW6zEoak5nuOiauKxl1ENJ7kdVCZcsTv9yQvOPR4_lycS1HHaSVReSWmFKZXrHFrwHBqsO-wRvVDdRhSs8xuvSoGnm7-YnQopGd-Y7BaIfVBNhaxtvMqwuXjT4Zse", "https://blogger.googleusercontent.com/img/a/AVvXsEhsJt6avAx9uP-KMVWw-Jsads8uJDubP-4w2nODSwLBWWpmL-r0MMcZiZ9H6FOVWz2qCw1cd6F-vMYoRFvOGiThiqexHsrWNLt6gSVtK1xPXYU6AQckPpAH12A1FnboCybiFftJvfRiVpP2MmMmODUg4MtoSjewhUfXqNybYKmFP8RRyRuvc7EVJv36khwZ"] },
-    { id: 402, cat: "minuman", name: "Kapsul Herbal Maag Donmaag", price: 80000, info: "60 Kapsul", images: ["https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjD8gdFaJHKpVbXYSmb4pdv_OyV6QBCt-11sGjwOzoDOHDcP7FshDFy4TBBb496lx4FulnYHV1kYfjsFejEsCjp4Tr861mW8i_k2VTIYrGlRDQ3NVqe5Oyc0yWIlVchvqJ68H1wXGcSm8jzvA_aNiYVjHy-TZ9Iy0runDfS62wMiElE70d-_3xGp2f1hw/s1080/WhatsApp%20Image%202023-05-29%20at%2009.35.48.jpeg", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiSotA9JkJiP2xNev6OtsrS_R1tAmOkxmG9nE-BP93fp2PmblsAOIVAjFM2zRzihQRhNU6iC8fZH8bEmKUEaJTMXfB1dHXYT9nRwwOT56KU6iaCBLbQfk3c2EwFnVI8YJcoNDz300jsbedyyk1Pxd3_BS6YIN7q7Re55XdoldmMyK_d9YqgHWErkhSmrQ/s1080/WhatsApp%20Image%202023-05-29%20at%2009.35.49.jpeg", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjP_YcaXvfDYgWFsOY-PUa8mhYsFGOGSc4XBkfl9-sjlyWrMyjervYdVyAo6_efQBo2jLqU5x5wcO3v0mYgARKkuVxzAeNm2KVQdWzRkfme2TzzrzA6qIY4SzvpQcM8qNOsv9JjuHaCQsz7Vb5fISd_XanFICPNw0F5tvFejSosqaPAGZ12dQLCBBc4Kg/s1080/WhatsApp%20Image%202023-05-29%20at%2009.35.49%20(1).jpeg"] },
-    { id: 403, cat: "minuman", name: "CHANA LIFE", price: 149000, info: "60 Kapsul", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEieBCkPiprcOPGX4skEo99MASlMXIrUuRPnQBBu7IS0KOP3cWU9Otx4jxI8Ht-VAVCPv26nE3tzar11MbEzQlMET3uYVuq-a52SbxlplWJIPg40M9KtA2ArBJ2y3R7tLazMCoRdsu_OFUYSOyoBnEIInslc2OrXu2R9EWQQP5cdevb_9HJoUhj86pZhHY_C", "https://blogger.googleusercontent.com/img/a/AVvXsEjRE5xM7pX7BLQZE26nqOilKIckmxGTh_Nf0looo8LOPQVEOr-xKt1OWZvZwTbsrKZkv-Y_dUxnrhE0VFQhv05af8Jcf47mXkdSU1zEjVXi6oXBdq925g1rJlDPzwkR1TMaNOw6OON9KmIqOx9HMtMabdquGsgepOPiBNT9rn2q7xA7zf8cp3zghMaUAauZ", "https://blogger.googleusercontent.com/img/a/AVvXsEjlC-Y0IHxGLACcXZ1GcIIIuaVgYekKKGaD0PaXqUNpfCJM0aVgVImjMLLpOP4m_wE7wXFRchLOjThOQ6X7Uh7FPqfmbqdgrKrW6fVUwbPF6Zo_ZgHgYLcuNrHyrLngvmHrhz7RwTAbBotIw86etdEnY0WeHoAXIGkiVbXQF6RteEX3znvFtoYJ6wLMs0aS"] },
-    { id: 404, cat: "minuman", name: "TEH CELUP KUMIS KUCING", price: 30000, info: "20 Kantong Teh celup", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhtkMA7ncH7lmdSQ6BN1DW_QEBPbneAH8bwhwPSTR0qt5XABAyEKVjjoLpW6V6ejwuvyRjroabzC-uwphlN8y4rg1-U0eBJ6vfTmUtwjZpuAUhGJxSfmQzaqNSv2rwos2x6gAqGt5gE2wGR-pUp_5Heluzcnit-IclTsJ_hynMrCBtJs7AmCxxZseg9sKZJ", "https://blogger.googleusercontent.com/img/a/AVvXsEjcKqTBs2tpQhcN9Y2SMnLZaJM2tLVDJW5B1lgc88SVkiFWgZIrshU77rcM9nBiv4qHvhctv0vH4tnVqeVIRjal0lFjs9mnPHOLeKmtgX2Mc_7s35-WRkl11l2jMVZHIE1zNKjrh_FnuriifJmabYLCqptdUKC_FcsMiQfHV7PfZuKhwqlyAehBlpj_ij2t", "https://blogger.googleusercontent.com/img/a/AVvXsEhrznYJFwAIqb-EvV3_4cIVLT_JIS-mK73HlKcabf4mXuZTdrxN8U0VlTUh9PsfudY8wnTAAkAYUDAT77pub_zyy9nClXVHm7O4D-jPPrCCYfCfvUtTrklBprqqTopKTI2NUjqH1-LvXbzjcuCy4Cxu0-KzK2uKImm-jQxHAJya8rSvHb67Is32ZTDTLOx3"] },
-    { id: 405, cat: "minuman", name: "Madu Herbal Spesial Maag", price: 120000, info: "Netto : 280 gr", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEgmfxXvO9TVwiOmSehWLQkayciK2MhXvJSyfN3oqwJlklSS7aGZ8KxjqO33YPWo3cD4oXx21bDgYOsXTjIGWycuhUuIji8HJzwjgRRCd-QvJZvarQTFyPHs5dk4yscUVxonZW4EzQXvsHl1E7gFJRn7iON87Iq-BkJgekYHhicItzKhkXbiL-uAEyslhV-8", "https://blogger.googleusercontent.com/img/a/AVvXsEh5WVu8X7J_6IWV0tBaxKWBoTkSISQVsc3CEbKCS7ylMo9cIcWh-R7xfVchMDH-AOok37fRv2m4MjIYruP1Ywel0_bYI672X6plgdMSoaLmx3FjyUaztcUl4XzXPPam5ZWcJ6_jBBlnI6W_QtWdH5udV0n-yr9m3kOYdx97gGHHd6MFyPLevM-XZr0rsnqj", "https://blogger.googleusercontent.com/img/a/AVvXsEjkEwFZGVPcv3cBsiv5qRYKn9TunvavxJK8ummUr0ULZTQmweCjIkcz9mIpzlYGr2hqSQsUb6QrCN273ZF-iWNtkhJTm97nzPX0B-3YfTD-7JUlGPJUTToB-f11K3riLAeykLbgkIRlw_CHzRP9OjFN_k1ndK4Ps5Ky9Q6XZEACi4FgCjmhPsqLXzDtLpPL"] },
-    { id: 406, cat: "minuman", name: "Gamat Emas Shofa Nature", price: 100000, info: "60 Kapsul", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEi5Ob2vnT2cOcskUGYP2iUiE7LJmErH-Z4mf6DJ1OfaXhcnkE-Wer5r4q-0TOy4mylFwr8ODA5dJNHEIcvZ_zsJ2TwoV7E-6ta5W8MlbQ1CU--KCcGM5dGo61NSUJ7FQdynlicQEiqNUd-e5Hy7nHgaoyxLsu8Jt0olYjAJrKM1yHK0LBwYhvDUvXu28R4S", "https://blogger.googleusercontent.com/img/a/AVvXsEhSarlOMEX3XobvwLKji4OuE4NfjVDjOj94ZSOEya_Y8NqQ8xdHaJhHSASNCIftJgmXQwVds4f7P81t054HKtshou-SNnb1m5GiJd9KegUpGEq7yqSKYHMJIa0YLiVOuPlymlODBFle1i4ETS7K8G-TPiubqo-VtnFjkaAyAtjQEMEn1WsoADu0NpqtFXKT", "https://blogger.googleusercontent.com/img/a/AVvXsEiPMUVSdfXNKE8i3O0t5nIt3NaKnDLHtYC12uOLIsLU_zxubBAutijXR0EgyMnmNageQ90N4WHJDLJe4Y4k1EvedzAaPNtZsBOG9K7WXnLsuTCRuEvbkE14vHKxU_cU7uw4Q8lf6dvuBoo4buXXvyQnqqBXC6tQhy6AP5X-p1Ss3D7JMF3KWnS4pT8kYBIa"] },
-    { id: 407, cat: "minuman", name: "KAPSUL GAMAT EMAS SHOFA NATURE 77", price: 100000, info: "70 Kapsul", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhsbkGYO-Z5SZxAPReErIDw-cog_HLW34I65SsSGx2xWJJFCXSRkXGdRZrdcN9gd70V3RKpsF7nBaNX-y0Cc7WWxb97sP7UtXpR9OZVfbaW-XKmUt5HWNUnYmguYRT8amSm3Ay2izgz6ftw2_GICSzJi4x1oqY654nRkduLpuiUM1280R_J-raa6VfkWSiy", "https://blogger.googleusercontent.com/img/a/AVvXsEhyPiJ3o1E25KPE5FPMT7mNsZhz9LdRnS0KukFqYkC1nKg1VZQBGKHtSmf6aglbuQuVg_WN72Uaxx2LPHxd-_k9_bC-kKGRvcDO9UFAKPeucyTtvdWY8zFpYyABlE9-Xh5Dl6vPyek6WweQOvEqX6W23wxRDA9XpjTDuhol7sttkv0uZ-jy44ef5Uc8HIPW", "https://blogger.googleusercontent.com/img/a/AVvXsEhj35MevERm5VS2XhA_APAkL8nzZyb6QL81EIAcmkp5v1fyK_58bbgtb-yZ5QA9hDSekN_40IZGS7neczmg-K9ni6dhcsodY4DnzSrwxXDJbzlsoWcGGQp6cRMv5JyqXMFqSjj57t5cHPy7xAnev3RRuMFGvyVicW5Dp1VvseGaLt5W1EZw6gyZIjnx-sGw"] },
-    { id: 408, cat: "minuman", name: "Kapsul minyak PROZELA 3 in 1", price: 45000, info: "60 Kapsul", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhm2nHaEkDtbJthE6Z6F9S0QaK-Pxpx3E4ajU1Bn6lJFl82eznz7ixOjds_swTSo5YoLaErk52aykCGtqjiCa7tao94-7CnAtnB7WH1zoNRUuBZeQPesg4-t9FEXvvlzS3pWdalpdq9sdpad-kiEv7lsXOUhGMl4VP14-qdHq6h0Iv47KF5N0jolh8VpXS9", "https://blogger.googleusercontent.com/img/a/AVvXsEiE7DBHNje9T5mb9HKP3kbeZQ3bINzvTJqlycpQRDDfOXRZ5Yn9xV07ZsHhMRnJiJI5RmtHKFREzqfFTGyqUZajrTxLkR0dcyGjpGRlYl7BJPM1coILgxL7FUaELp3NPylDtDxZNLpBftkddsu0s1TY0pf-ZXOgOsroRmD6ZRheO6SZDLrB0wA_qVJ9tlta", "https://blogger.googleusercontent.com/img/a/AVvXsEhGiVNjZ-n4Tulc8yZRzZMhH_QHYYyW3El_J2s0uW7VSSyippmflXpRTlR7K3vINYLly74MpKzLIzdCUUqvGOxLzu7ttlAZA_w4a37F1_1Q7aq0IzZqoXdp9Cq60WdrlvnIMLGg_FRDHtkwzffdvTxyhA8x7JpZWxnZWBTnzyJcFPw7zEFcwHF2EA16rg_e"] },
-    { id: 409, cat: "minuman", name: "BLACK GARLIC", price: 85000, info: "Netto: 100 gram", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhcT5VADQfce-m2GCzl6Jed7uVNPD1IfzbpqhjVZlMdBWm2s52oed4wvA9VeyRgY95-hJxfbEhmZ4jlahTvmZP7Nc0x1BPkGyXbYA5u3c4FM8jbrkyDrYybpc2Pu7fsmXP8SjuDP_MuPNEaIDXO_UUCifB6Gfv-zLLrNKgwMhcaN4LtCbE58w1lCQ2iYj6i", "https://blogger.googleusercontent.com/img/a/AVvXsEjcjrHb_U6sqJBGnvOkcID7fzw7l-HMcebfgmZqqdH5ea01ThlWOQM3I1uuIdkvCN_73yps2bJtzJNXRATy-9eKMAor-TK9i90KTqNUGXknMpVAlGufdrzmS70aHEgnpizQ87K0QbO-I4AZ7g40yyVe6uKjCF3KVi7_5Ex3W9dmhhy8VMMKH4uiOWI9i1M1", "https://blogger.googleusercontent.com/img/a/AVvXsEj_OyEGjrV4mdXCZ4tfR80h1bnmQrt5_zz2XDMWmMpSOKWVTGRBceNNHyQAqhGe8LbLHFQ6wnRz_lmDquKYFAwUyC2wLkaMkjO2PsQiQx1KGlSz2mo1egthkzhJ0HEcWTFxSLvwtfkOtpUCt7OITy2TaqdLii4jRXduHbUBOhJYegXPQ4-Q9JLQWzM99Bum"] }
-];
+    /* 
+       DATA PRODUK (Lengkap: Gambar Slide & Varian)
+    */
+    const products = [
+        { 
+            id: 101, cat: "kurma", name: "Tunis Madu Sapphire", price: 245000, 
+            info: "Best Seller", 
+            images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhdsbI04IEMU4jzATo-bd_wHam1thVKYjHxFDy4pmVHzQlhf888o0m_5QYhjv-Q9QFxTLQDMZJi3R7zPlX-9A2MQyYH_H6veA4Vwfji6L6ajlPXn-pV8z33LwNubO0oT5KeOEf7fu_no8VuLh49gs6YaI5Dp3gJILEfaCD-bbLGvD7IAIkSGOCXsCXmyas=w455-h455", "https://blogger.googleusercontent.com/img/a/AVvXsEhESiKD2qQvP97zz6_mAjanB7db1l0RzdeMDqy3Rbztj6TmWcWHKqiTkZ9ZqNOfAaLy8m8Q4HM0Mhff1RCN1xBEzl86kTMFk-m9-eA7kedcUcwCPEtvRebDx-IoisEXXReLutOfBEcKfLzrFGqe96gbrTnapWq1W2hsGtfq0yOlWUidA1pymoN8Cnhmm3M=w409-h545"],
+            variants: [ { name: "500 Gram", price: 35000 }, { name: "1 Kg", price: 65000 }, { name: "5 Kg (Dus)", price: 245000 } ]
+        },
+        { 
+            id: 104, cat: "kurma", name: "Kurma Mesir Golden Valley", price: 260000, 
+            info: "Manis Legit", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiKLnUdCQ8PzJ3giiTBCPiYYFRCLrq4HsOIXqsDWUEA7TGeDzgAsOVuT6WawIro4SeHCCOF14upGdpytfjit7p_98SbPbP6fffLmZOJNTlpO9h8X5Mi-kym0UOWeTBmY9UEkeK4HdzgxHwHOCqK3l2O30vr1bgkymcfhC00rNV6_2ZkmGl2cxibErSgXjw=w350-h350", "https://blogger.googleusercontent.com/img/a/AVvXsEiJNdc2fae-0VSB6rJVOm4bHHdgYj9MUKYnLEdOmehxliEU2bjEZKxCHWlHc14IAOgzsXYeAdiN9sa31oeYRiYZ7oRKE8QEsVgZUMylEJD2fGyrQcKDcdW62jS3LOyK8mbQOrDH2XjlRqYxgogXRYq33ZU2H_kDvpCqUtTWsyyPi5dVs0Q5O-I7i35JoG0=w356-h356"],
+            variants: [ { name: "1 Kg Repack", price: 30000 }, { name: "10 Kg (Dus)", price: 260000 } ]
+        },
+        { 
+            id: 102, cat: "kurma", name: "Tunisia Tangkai Al-Fihri", price: 290000, 
+            info: "Premium", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEj9FtjFrVm6G4__hmOsL7McvBPaWyjt35kWc3OnBBLkLFTaa4ROfczqfCr4r5KGMKaP1edYneHDrfGHIIo-rwwoDvQgj-XreHOy3on3RiET6AB5O7n-va2WoFgjIGr3-ZAhvHF81UZMClKOXiKkwTfiTuuFL554dmcFtIf5TBSwJXCKf69juc0xjB_iuDw", "https://blogger.googleusercontent.com/img/a/AVvXsEhPoM4QbR3Sa1SdXyNC8giz7t_ihR9x945mCaVW3gJGnO-kfzHK2_eFyP4z-JPf6lfoq1txSTucq1tDBV8LJ6fhiZaue77dPKJgkSyG_7w3jWHObLpAH5DoK7ioIeObN6SmCwN0gY7Qj_WSQmV2rh2ycoDC-IN24E4I82YuuRHsGX52osdlKffk9pbIoNU"],
+            variants: [ { name: "500 Gram", price: 35000 }, { name: "5 Kg (Dus)", price: 290000 } ]
+        },
+        { 
+            id: 103, cat: "kurma", name: "Sukari Kemasan Ekonomis", price: 65000, 
+            info: "Kurma Basah", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiSJQddn4KLrvKRATqaTUIKd4HeUm0CaV1gvFoV17m2zDTZsiWVlCk9P1LIouv84C6V9ku1hp7ERahwXtzSBzOudsfKVVJxW3Kr0D50ivOBavfFkxg-Z0o-vKcGDFwCexbP4NBUZaD7IKyTdHGQzgJjlhGvBFKKRXLVqJaXE14R6ciQZtWfBodeSoYvvMY", "https://blogger.googleusercontent.com/img/a/AVvXsEiZAuu9WuIGOIubLsfDNLFWRLCk7Jv1Tb8BVvgDH56LVZfy4EO8aoo5vhVUAWGfhgKGStzi9IzdQySo_I6ypY-TpaURbyQU4NOEQ6sAUjNCQYawStxcR9GmXiyWMUHgqLoeZzUvOWDxObEN2m6i08BmUZ_QMTvTWHv8YOCRploiqHiGQqORIUnpjYGAfZE"],
+            variants: [ { name: "400 Gram", price: 35000 }, { name: "850 Gram (Ember)", price: 65000 }, { name: "3 Kg (Dus)", price: 180000 } ]
+        },
+        { 
+            id: 201, cat: "pakaian", name: "Al-Noor Premium Katun", price: 320000, 
+            info: "Baju Koko", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhTYJyYg0KPrRUhBNBbRS26infGZNn7t8CrKKAC1b5KI-vHQDfxoqWnuVqzFsXDQOb43MUDAfUobOSqdz9F-Js3x7diiszevX89nxORLmyjZjeNwax2uz5JbYJC1grLiYfX4KQcgHxsvqlY38q0u1hzJmhuQvhjzBwt3xeOOZ0d-L5_LHS4_9cIUTvgwr8", "https://blogger.googleusercontent.com/img/a/AVvXsEixLfWOVE8vl4B6Zw7WFQ71vAtSJXf3q_ImHROFhdItvdZaJC5B0xW8RO9L1vum-RhRDK-VeKnNT8rnSMmovxLqPV20pSZrWmMqm1y2Dz72OV0Ol-R-ifp6Bl7InDmkU_HIsSi8ut_JxH_X_JObPH9EeIjK_kuY1RbkKmeNyBPd76gL7qCGOjbj_c_DL0M"],
+            variants: [ { name: "Size Anak (S-L)", price: 180000 }, { name: "Size Remaja (XL-XXL)", price: 220000 }, { name: "Size Dewasa (S-XL)", price: 320000 } ]
+        },
+        { 
+            id: 204, cat: "pakaian", name: "Jubah Al Haramain Putih", price: 350000, 
+            info: "Impor", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEgnTfb16kmRPNDVflf77n0hRK4mPXElgegoDIu8q0sHPSgUuSBI8sQ0AX363MxUiwEMDwJnHEaD7-H7fDjn2CCf3mAfvBYivYV5rQIjvR0dY3eZFyv1FSteLSYRAW688tDNHAcA6ig7uMTTwRLjJs6z6mz7knJuNN1uZOn_LGkqEed0b5zfKStbnq1qJqw", "https://blogger.googleusercontent.com/img/a/AVvXsEjIlzscQoMDDvmhsJPey2U3LwZaLHqUXoKnNc1ydnoji7PHp4CBkuOEWcsi8A2kesMphpw7xMy4ctnFaZho4FckM_Mo_yFnEcxc-rOH6sDEO7_6iFZALgC3euWXgJMFiEOXJfL3JG8FdyZm6kcsbkyx5TtDpZ7qEBLNmZLintyIbdYcbIX3OKwfAnj1-TM"],
+            variants: [ { name: "Size Anak", price: 210000 }, { name: "Size Remaja", price: 270000 }, { name: "Size Dewasa", price: 350000 } ]
+        },
+        { 
+            id: 399, cat: "minuman", name: "Jahe Merah AMH", price: 18000, 
+            info: "Minuman", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiBFa_q7CtHbFeoVQVJnhxQ5gilGYGbFgf-sPoDmiYqLjpDROAgbnF_X9hTCUnzlH2v-nJdOguivLGZSC0TsOwZ1rjOc8Nf1rB7jBSWf7PnHu9jeRj9NWAKa5bfRf2FUgVx94CvrRFWO0F1pi2EdfMvCx1oo7wPFp-sqbKqK3u8tDQNkjszE4WvjV2wj7w", "https://blogger.googleusercontent.com/img/a/AVvXsEj9L-ZQOC3DqQZwBhC2HqS9cBAepqtgviP8gdtkEYaDfbCt6y4P6kpwZ_ltDu-shZiQ7V7G5rmY_5aQzKydbuGz9qZRHSROFI6kjuIBh1RMaA7vsqRquc8kVqRCOolonV9GyTTmqFA_Ba6m9g56QPp2zNNr4X4NPeCBajkhSuA1izcaMGuBG_wNasq0MMg"],
+            variants: [ { name: "1 Renteng (10 Sachet)", price: 18000 }, { name: "1 Bal (20 Renteng)", price: 340000 } ]
+        },
+        { id: 106, cat: "kurma", name: "Kurma Ajwa Al-Madinah", price: 70000, info: "Kurma Nabi", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEge3ETojmZuh7crBuUnDZ6vbL-yWPqtjYmvrhOs0kUD8NbP4K9OMh4zFXUQ0QqwjE9tjnhP6SA8UOkfj78qu6lhb_1U3dQ0qGCiJZEsCN_z8BEIaJDL8DCvi_fbHqsGg5uJ5thk29fIPAeJrAbu1CPsRlR_5NxqZ2PX2LJ4YrUFnXjbNJJMYKAmJIB1kSE", "https://blogger.googleusercontent.com/img/a/AVvXsEjUT1guhNoBhTj4wt9QykVytAds9H45MOs6apG7yIr7ivDUZvv2mZhvfZ3VZ6uZtbaRXwvoZhVoUSe-wEED0taTiQsEoxMsSRmE8-lO_sTHRUH2XRJCd5m0x8oqO7m3RhlOiA1ECEwRNpc5xAiFOvx7p_ykITWZ2Bi1kTNiM7Z2IH5HgAd-aQDPi_Veqks"], variants: [{name: "500 Gram", price: 70000}, {name: "1 Kg", price: 135000}] },
+        { id: 301, cat: "makanan", name: "Coklat Turkey Truffle", price: 170000, info: "Mix Rasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEj6egarq3OMPJkpAvVpmZ_OOc6Xh5ZpGh6VW-JrTcgXWHf9SPSexX-EOt5NJFBkXK_WTAJIVbC_KtncDUxqC8v05pDf8X6J2ieR5Q4Gm67sPxESz49BxEzEtP2PNNgGWvU7JDorZ0Gf3CFoX7gfjM3K9azQLOFr6_1x_auzQKnArOJsMxrAqGp8Rzobr5s"] },
+        { id: 401, cat: "minuman", name: "Madu Vidat Kids", price: 99000, info: "175gr", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiuhPcrmbXmPsUf_HBPG1ocBvaIgNOoGI2Q0TTf4pa2a5iEjiaYLNym-dD38Xpbnw1YS__ux_Gh64R6k8p8Yg2D85AWvDJNc_pPnmw_SJFYcTrjSmzOiNAoHVbFXOeNbJvPlk5avBWOc2qu46e8kRDt586bzt-7iRTRC8lB60ehnMSMry8WpVEBJN8aHjSt", "https://blogger.googleusercontent.com/img/a/AVvXsEg30EjqVBFH6t8ifsYzjJE-Z4nWeBuyv6WgsTtfjEKHKgz7nc9CQIQgZ9_Z_WThqqNvW6zEoak5nuOiauKxl1ENJ7kdVCZcsTv9yQvOPR4_lycS1HHaSVReSWmFKZXrHFrwHBqsO-wRvVDdRhSs8xuvSoGnm7-YnQopGd-Y7BaIfVBNhaxtvMqwuXjT4Zse"] },
+        { id: 404, cat: "minuman", name: "Teh Kumis Kucing", price: 30000, info: "20 Kantong", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhtkMA7ncH7lmdSQ6BN1DW_QEBPbneAH8bwhwPSTR0qt5XABAyEKVjjoLpW6V6ejwuvyRjroabzC-uwphlN8y4rg1-U0eBJ6vfTmUtwjZpuAUhGJxSfmQzaqNSv2rwos2x6gAqGt5gE2wGR-pUp_5Heluzcnit-IclTsJ_hynMrCBtJs7AmCxxZseg9sKZJ", "https://blogger.googleusercontent.com/img/a/AVvXsEjcKqTBs2tpQhcN9Y2SMnLZaJM2tLVDJW5B1lgc88SVkiFWgZIrshU77rcM9nBiv4qHvhctv0vH4tnVqeVIRjal0lFjs9mnPHOLeKmtgX2Mc_7s35-WRkl11l2jMVZHIE1zNKjrh_FnuriifJmabYLCqptdUKC_FcsMiQfHV7PfZuKhwqlyAehBlpj_ij2t"] }
+    ];
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let tempQty = {};
-let imgState = {};
-let currentCat = "all";
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let currentCat = 'all';
+    let imgState = {};
 
-// Init State
-products.forEach(p => { tempQty[p.id] = 1; imgState[p.id] = 0; });
+    products.forEach(p => imgState[p.id] = 0);
 
-function filterCat(cat, btn) {
-    currentCat = cat;
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderStore();
-}
+    function renderStore() {
+        const term = document.getElementById("searchInput").value.toLowerCase();
+        const grid = document.getElementById("productGrid");
+        grid.innerHTML = "";
 
-function renderStore() {
-    const term = document.getElementById("searchInput").value.toLowerCase();
-    const container = document.getElementById("productContainer");
-    container.innerHTML = "";
+        const filtered = products.filter(p => 
+            (currentCat === 'all' || p.cat === currentCat) && 
+            p.name.toLowerCase().includes(term)
+        );
 
-    const filtered = products.filter(p => {
-        const matchCat = currentCat === 'all' || p.cat === currentCat;
-        const matchName = p.name.toLowerCase().includes(term);
-        return matchCat && matchName;
-    });
+        filtered.forEach(p => {
+            let idx = imgState[p.id];
+            let displayPrice = p.price;
+            let priceLabel = "";
+            let arrows = "";
+            let dots = "";
 
-    filtered.forEach(p => {
-        let dots = p.images.map((_,i) => `<div class="dot ${i===imgState[p.id]?'active':''}"></div>`).join("");
-        container.innerHTML += `
-        <div class="card">
-            <div class="img-wrapper">
-                <img src="${p.images[imgState[p.id]]}" id="img-${p.id}" class="card-img">
-                <div class="slider-nav">
-                    <button class="nav-btn" onclick="changeImg(${p.id}, -1)">❮</button>
-                    <button class="nav-btn" onclick="changeImg(${p.id}, 1)">❯</button>
+            if(p.variants && p.variants.length > 0) {
+                displayPrice = Math.min(...p.variants.map(v => v.price));
+                priceLabel = `<span class="start-from">Mulai dari</span><br>`;
+            }
+
+            // Slider Logic
+            if(p.images.length > 1) {
+                dots = `<div class="dots-container">${p.images.map((_,i) => `<div class="dot ${i===idx?'active':''}"></div>`).join('')}</div>`;
+                arrows = `
+                <button class="slider-btn prev-btn" onclick="slideImg(event, ${p.id}, -1)">❮</button>
+                <button class="slider-btn next-btn" onclick="slideImg(event, ${p.id}, 1)">❯</button>`;
+            }
+
+            grid.innerHTML += `
+            <div class="card">
+                <div class="img-wrapper">
+                    <img src="${p.images[idx]}" class="card-img" id="img-${p.id}" loading="lazy">
+                    ${arrows} ${dots}
                 </div>
-                <div class="dots-container">${dots}</div>
-            </div>
-            <div class="card-body">
-                <span class="product-info">${p.info}</span>
-                <h3>${p.name}</h3>
-                <div class="price">Rp ${p.price.toLocaleString()}</div>
-                <div class="qty-control">
-                    <button class="qty-btn" onclick="updCardQty(${p.id}, -1)">−</button>
-                    <span id="q-${p.id}">${tempQty[p.id]}</span>
-                    <button class="qty-btn" onclick="updCardQty(${p.id}, 1)">+</button>
+                <div class="card-body">
+                    <span class="product-cat">${p.cat}</span>
+                    <h3 class="product-name">${p.name}</h3>
+                    <div class="product-info">${p.info}</div>
+                    <div class="product-price">${priceLabel}Rp ${displayPrice.toLocaleString()}</div>
+                    <div class="card-actions">
+                        <button class="btn-outline" onclick="openDetail(${p.id})">Detail</button>
+                        <button class="btn-fill" onclick="openDetail(${p.id})">Pilih Varian</button>
+                    </div>
                 </div>
-                <button class="add-btn" onclick="addToCart(${p.id})">Tambah Keranjang</button>
-            </div>
-        </div>`;
-    });
-}
-
-function changeImg(id, dir) {
-    const p = products.find(x => x.id === id);
-    imgState[id] = (imgState[id] + dir + p.images.length) % p.images.length;
-    renderStore();
-}
-
-function updCardQty(id, d) {
-    tempQty[id] = Math.max(1, tempQty[id] + d);
-    document.getElementById(`q-${id}`).innerText = tempQty[id];
-}
-
-function addToCart(id) {
-    const p = products.find(x => x.id === id);
-    const exist = cart.find(x => x.id === id);
-    if(exist) exist.qty += tempQty[id];
-    else cart.push({ ...p, qty: tempQty[id], image: p.images[0] });
-    save(); renderCart(); showToast();
-    tempQty[id] = 1; document.getElementById(`q-${id}`).innerText = 1;
-}
-
-function updateCartQty(idx, d) {
-    cart[idx].qty += d;
-    if(cart[idx].qty <= 0) cart.splice(idx, 1);
-    save(); renderCart();
-}
-
-function renderCart() {
-    const list = document.getElementById("cartList");
-    let html = "", total = 0;
-    cart.forEach((p, i) => {
-        total += p.price * p.qty;
-        html += `<div class="cart-item-row">
-            <img src="${p.image}" style="width:55px; height:55px; border-radius:10px; object-fit:cover">
-            <div style="flex:1"><b>${p.name}</b><br><small>Rp ${p.price.toLocaleString()}</small></div>
-            <div style="display:flex; align-items:center; gap:8px">
-                <button class="qty-btn" style="width:28px;height:28px;font-size:14px" onclick="updateCartQty(${i}, -1)">−</button>
-                <span>${p.qty}</span>
-                <button class="qty-btn" style="width:28px;height:28px;font-size:14px" onclick="updateCartQty(${i}, 1)">+</button>
-            </div>
-        </div>`;
-    });
-    list.innerHTML = html || "<p style='text-align:center; color:#999; margin-top:20px'>Yuuk penuhi keranjang!</p>";
-    document.getElementById("totalPrice").innerText = "Rp " + total.toLocaleString();
-    document.getElementById("count").innerText = cart.length;
-}
-
-function toggleCart() {
-    const c = document.getElementById("cartBox");
-    c.style.display = (c.style.display === "flex") ? "none" : "flex";
-}
-
-function checkout() {
-    // Cek kalau keranjang kosong
-    if(cart.length === 0) {
-        alert("Keranjang masih kosong! Silakan pilih produk dulu.");
-        return;
+            </div>`;
+        });
     }
 
-    let message = "Halo Navil Healthy, saya mau order:%0A%0A";
-    let total = 0;
-
-    // Loop barang belanjaan
-    cart.forEach((item, index) => {
-        let subtotal = item.price * item.qty;
-        total += subtotal;
+    function slideImg(e, id, dir) {
+        e.stopPropagation();
+        const p = products.find(x => x.id === id);
+        let idx = imgState[id] + dir;
+        if(idx < 0) idx = p.images.length - 1;
+        if(idx >= p.images.length) idx = 0;
+        imgState[id] = idx;
         
-        // --- INI BAGIAN PENTING YANG BARU ---
-        // Menambahkan Nama + INFO (Berat/Ukuran) + Jumlah
-        message += `${index + 1}. *${item.name}* %0A`; 
-        message += `   ℹ️ ${item.info} %0A`; // <--- Ini yang memunculkan ket. berat/ml
-        message += `   Jumlah: ${item.qty} pcs%0A%0A`;
-    });
+        const img = document.getElementById(`img-${id}`);
+        img.style.opacity = 0;
+        setTimeout(() => { img.src = p.images[idx]; img.style.opacity = 1; }, 200);
+        renderStore();
+    }
 
-    message += `*Total: Rp ${total.toLocaleString()}*`;
-    message += "%0A%0AMohon info ongkirnya kak.";
+    function filterCat(cat, btn) {
+        currentCat = cat;
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderStore();
+    }
 
-    // Kirim ke WhatsApp
-    window.open(`https://wa.me/6281286467275?text=${message}`, '_blank');
-}
+    // MODAL VARIAN LOGIC
+    let currentSelectedVariant = null;
+    let currentProduct = null;
 
-function save() { localStorage.setItem("cart", JSON.stringify(cart)); }
-function showToast() {
-    const x = document.getElementById("toast");
-    x.className = "show";
-    setTimeout(() => x.className = "", 3000);
-}
+    function openDetail(id) {
+        currentProduct = products.find(x => x.id === id);
+        let variantHtml = "";
+        
+        if (currentProduct.variants && currentProduct.variants.length > 0) {
+            currentSelectedVariant = currentProduct.variants[0]; 
+            let options = currentProduct.variants.map((v, idx) => 
+                `<option value="${idx}">📦 ${v.name} - Rp ${v.price.toLocaleString()}</option>`
+            ).join('');
+            variantHtml = `
+            <div class="variant-group">
+                <label class="variant-label">Pilih Ukuran / Tipe:</label>
+                <select id="variantSelect" class="variant-select" onchange="changeVariant(this.value)">${options}</select>
+            </div>`;
+        } else {
+            currentSelectedVariant = null;
+        }
 
-setInterval(() => {
-    const slides = document.querySelectorAll('.slide');
-    if(!slides.length) return;
-    let active = Array.from(slides).findIndex(s => s.classList.contains('active'));
-    slides[active].classList.remove('active');
-    slides[(active + 1) % slides.length].classList.add('active');
-}, 5000);
+        document.getElementById("modalContent").innerHTML = `
+            <img src="${currentProduct.images[0]}" style="width:100%; border-radius:12px; margin-bottom:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2)">
+            <h2 style="color:var(--text-main); font-family:'Playfair Display', serif; margin-bottom:5px;">${currentProduct.name}</h2>
+            <div id="modalPriceDisplay" style="font-size:24px; font-weight:bold; color:var(--gold); margin-bottom:15px;">
+                Rp ${(currentSelectedVariant ? currentSelectedVariant.price : currentProduct.price).toLocaleString()}
+            </div>
+            <p style="color:var(--text-muted); line-height:1.6; margin-bottom:15px; font-size:14px;">
+                Produk kualitas premium <b>${currentProduct.name}</b>. Cocok untuk kebutuhan keluarga atau hadiah spesial.
+            </p>
+            ${variantHtml}
+            <button class="btn-fill" style="width:100%; padding:15px; margin-top:20px; font-size:16px;" onclick="addToCartFromModal()">
+                + Masukkan Keranjang
+            </button>
+        `;
+        document.getElementById("productModal").classList.add("active");
+    }
 
-renderStore();
-renderCart();
+    function changeVariant(idx) {
+        currentSelectedVariant = currentProduct.variants[idx];
+        document.getElementById("modalPriceDisplay").innerText = "Rp " + currentSelectedVariant.price.toLocaleString();
+    }
+
+    function closeModal() { document.getElementById("productModal").classList.remove("active"); }
+
+    function addToCartFromModal() {
+        let finalName = currentProduct.name;
+        let finalPrice = currentProduct.price;
+        let variantName = "";
+
+        if(currentSelectedVariant) {
+            finalName = `${currentProduct.name}`;
+            variantName = currentSelectedVariant.name;
+            finalPrice = currentSelectedVariant.price;
+        }
+
+        const exist = cart.find(x => x.id === currentProduct.id && x.variant === variantName);
+        if(exist) exist.qty++; 
+        else cart.push({
+            id: currentProduct.id,
+            name: finalName,
+            variant: variantName,
+            price: finalPrice,
+            image: currentProduct.images[0],
+            qty: 1
+        });
+        
+        saveCart(); renderCart(); closeModal();
+        document.getElementById("cartSidebar").classList.add("active");
+    }
+
+    function renderCart() {
+        const list = document.getElementById("cartList");
+        let html = "", total = 0, count = 0;
+        
+        cart.forEach((item, i) => {
+            total += item.price * item.qty;
+            count += item.qty;
+            let variantDisplay = item.variant ? `<div style="font-size:11px; color:var(--gold); font-weight:600; margin-top:2px;">🔹 ${item.variant}</div>` : "";
+
+            html += `
+            <div style="display:flex; gap:12px; margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:12px;">
+                <img src="${item.image}" style="width:60px; height:60px; border-radius:10px; object-fit:cover;">
+                <div style="flex:1;">
+                    <div style="font-weight:600; font-size:14px; color:var(--text-main); line-height:1.2;">${item.name}</div>
+                    ${variantDisplay}
+                    <div style="font-size:13px; color:var(--text-muted); margin-top:4px;">Rp ${item.price.toLocaleString()}</div>
+                </div>
+                <div style="display:flex; align-items:center;">
+                    <button onclick="updCart(${i}, -1)" style="width:25px; height:25px; background:var(--bg-body); border:1px solid var(--border); border-radius:6px;">-</button>
+                    <span style="font-size:14px; font-weight:bold; width:25px; text-align:center; color:var(--text-main)">${item.qty}</span>
+                    <button onclick="updCart(${i}, 1)" style="width:25px; height:25px; background:var(--bg-body); border:1px solid var(--border); border-radius:6px;">+</button>
+                </div>
+            </div>`;
+        });
+        
+        list.innerHTML = html || "<div style='text-align:center; color:var(--text-muted); margin-top:30px'>Keranjang kosong</div>";
+        document.getElementById("totalPrice").innerText = "Rp " + total.toLocaleString();
+        document.getElementById("cart-count").innerText = count;
+    }
+
+    function updCart(i, v) {
+        cart[i].qty += v;
+        if(cart[i].qty <= 0) cart.splice(i, 1);
+        saveCart(); renderCart();
+    }
+
+    function saveCart() { localStorage.setItem("cart", JSON.stringify(cart)); }
+    function toggleCart() { document.getElementById("cartSidebar").classList.toggle("active"); }
+
+    function checkout() {
+        if(!cart.length) return alert("Keranjang kosong!");
+        let msg = "Assalamu'alaikum Navil Healthy, saya mau order:%0A%0A";
+        let total = 0;
+        cart.forEach((item, i) => {
+            total += item.price * item.qty;
+            let itemLine = `${i+1}. ${item.name}`;
+            if(item.variant) itemLine += ` [${item.variant}]`;
+            itemLine += ` (${item.qty}x)`;
+            msg += `${itemLine} - Rp ${(item.price * item.qty).toLocaleString()}%0A`;
+        });
+        msg += `%0A*TOTAL: Rp ${total.toLocaleString()}*%0A`;
+        msg += "%0AMohon info ongkir ke alamat saya.";
+        window.open(`https://wa.me/6281286467275?text=${msg}`);
+    }
+
+    function toggleTheme() {
+        const html = document.documentElement;
+        const next = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        html.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+    }
+
+    if(localStorage.getItem("theme") === "light") toggleTheme();
+    renderStore(); renderCart();
+
+    let heroIdx = 0;
+    const heroes = document.querySelectorAll('.hero-bg');
+    setInterval(() => {
+        heroes[heroIdx].classList.remove('active');
+        heroIdx = (heroIdx + 1) % heroes.length;
+        heroes[heroIdx].classList.add('active');
+    }, 4000);
 </script>
 </body>
 </html>
