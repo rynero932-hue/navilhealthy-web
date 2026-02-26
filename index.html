@@ -6,7 +6,7 @@
     <title>Navil Healthy - Premium Store</title>
     
     <!-- FAVICON (LOGO DI TAB BROWSER) -->
-    <link rel="icon" href="https://blogger.googleusercontent.com/img/a/AVvXsEggd15kM69szlZFRVzxjwe-D3HXima2ub8FWFf5xhpTv9k7Mv73zeTnOKqYUPHkBBGrUSL6sWKZqK6RIzyxgMJ_V_SritZoqae23ly4mYvJuRIJawdqnB6N2U3xXMaQBjx5IxgxKop02v9jBbHePWUng_W41F0TzPjInWgiCXf1X4ciFNTffwkYaoboJ64" type="image/png">
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/a/AVvXsEgQHDc6LP6GyOMvoh2xZKBtvg5TX4XPDTpLT-23BTberMQuAJIyR2MqY0zQfWBnepwqT3PuWWQsz7Z61znEho8CIq5xt_JOg_iqxUiFOb7cXhA1gOlWN525BtUV3ta6nYFdOrnFnypo-HBCgqGXd3qIcwVabP-eCy9xyd1ucvMLjrmZPOv925TeHjan21g">
 
     <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
             --gold: #d97706;
             --gold-gradient: linear-gradient(45deg, #b45309, #d97706, #fbbf24);
             
-            /* Dark Mode Default */
+            /* Dark */
             --bg-body: #0f172a;
             --bg-pattern: url("https://www.transparenttextures.com/patterns/arabesque.png");
             --bg-card: #1e293b;
@@ -29,7 +29,7 @@
             --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
         }
 
-        [data-theme="light"] {
+        [data-theme="Light Mode Default"] {
             --bg-body: #f8fafc;
             --bg-card: #ffffff;
             --text-main: #1e293b;
@@ -254,7 +254,7 @@
 <!-- NAVBAR -->
 <nav class="navbar">
     <div class="nav-container">
-        <div class="logo">🌙 Navil Healthy</div>
+        <div class="logo">Navil Healthy</div>
         <div class="cart-icon-nav" onclick="toggleCart()">
             🛒 <span class="badge" id="cart-count">0</span>
         </div>
@@ -559,7 +559,7 @@
                 Rp ${(currentSelectedVariant ? currentSelectedVariant.price : currentProduct.price).toLocaleString()}
             </div>
             <p style="color:var(--text-muted); line-height:1.6; margin-bottom:15px; font-size:14px;">
-                Produk kualitas premium <b>${currentProduct.name}</b>. Cocok untuk kebutuhan keluarga atau hadiah spesial.
+                Produk kualitas premium <b>${currentProduct.name}</b>. Cocok untuk kebutuhan keluarga atau hadiah spesial, Tafaddol di Chekcout.
             </p>
             ${variantHtml}
             <button class="btn-fill" style="width:100%; padding:15px; margin-top:20px; font-size:16px;" onclick="addToCartFromModal()">
