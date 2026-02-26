@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navil Healthy - Premium Store</title>
     
+    <!-- FAVICON (LOGO DI TAB BROWSER) -->
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/a/AVvXsEggd15kM69szlZFRVzxjwe-D3HXima2ub8FWFf5xhpTv9k7Mv73zeTnOKqYUPHkBBGrUSL6sWKZqK6RIzyxgMJ_V_SritZoqae23ly4mYvJuRIJawdqnB6N2U3xXMaQBjx5IxgxKop02v9jBbHePWUng_W41F0TzPjInWgiCXf1X4ciFNTffwkYaoboJ64" type="image/png">
+
     <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -164,7 +167,7 @@
             box-shadow: 0 4px 10px rgba(22, 101, 52, 0.2);
         }
 
-        /* ===== SOSMED SECTION (YANG KEMBALI) ===== */
+        /* ===== SOSMED SECTION ===== */
         .socmed-section { background: var(--bg-card); padding: 50px 20px; margin-top: 50px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .socmed-grid { max-width: 1000px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .socmed-card {
@@ -192,8 +195,21 @@
             position: relative; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border);
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
-        .close-btn { position: absolute; top: 15px; right: 15px; font-size: 28px; cursor: pointer; color: var(--text-muted); }
+        .close-btn { position: absolute; top: 15px; right: 15px; font-size: 28px; cursor: pointer; color: var(--text-muted); z-index: 20; }
         
+        /* Modal Slider */
+        .modal-img-wrapper { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .modal-main-img { width: 100%; height: 300px; object-fit: cover; transition: opacity 0.3s; }
+        .modal-slider-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 40px; height: 40px; background: rgba(0,0,0,0.6);
+            border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); color: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 18px; z-index: 10;
+        }
+        .modal-slider-btn:hover { background: var(--gold); }
+        .modal-prev { left: 10px; } .modal-next { right: 10px; }
+
         .variant-group { margin-top: 15px; }
         .variant-label { font-size: 14px; font-weight: 600; margin-bottom: 8px; display: block; color: var(--text-main); }
         .variant-select {
@@ -229,7 +245,7 @@
             .product-name { font-size: 14px; height: 42px; }
             .product-price { font-size: 15px; }
             .btn-outline, .btn-fill { font-size: 11px; padding: 8px; }
-            .socmed-grid { grid-template-columns: 1fr; }
+            .modal-main-img { height: 250px; }
         }
     </style>
 </head>
@@ -280,7 +296,7 @@
     <div class="product-grid" id="productGrid"></div>
 </div>
 
-<!-- SOCMED SECTION (SUDAH KEMBALI) -->
+<!-- SOCMED SECTION -->
 <section class="socmed-section">
     <div class="section-title">
         <h2>Belanja Lebih Mudah</h2>
@@ -355,7 +371,7 @@
 </div>
 
 <!-- UTILS -->
-<button class="theme-btn" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+<button class="theme-btn" onclick="toggleTheme()" title="Ganti Tema">💡</button>
 <div class="float-cart" onclick="toggleCart()">🛒</div>
 
 <script>
@@ -367,7 +383,7 @@
             id: 101, cat: "kurma", name: "Tunis Madu Sapphire", price: 245000, 
             info: "Best Seller", 
             images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhdsbI04IEMU4jzATo-bd_wHam1thVKYjHxFDy4pmVHzQlhf888o0m_5QYhjv-Q9QFxTLQDMZJi3R7zPlX-9A2MQyYH_H6veA4Vwfji6L6ajlPXn-pV8z33LwNubO0oT5KeOEf7fu_no8VuLh49gs6YaI5Dp3gJILEfaCD-bbLGvD7IAIkSGOCXsCXmyas=w455-h455", "https://blogger.googleusercontent.com/img/a/AVvXsEhESiKD2qQvP97zz6_mAjanB7db1l0RzdeMDqy3Rbztj6TmWcWHKqiTkZ9ZqNOfAaLy8m8Q4HM0Mhff1RCN1xBEzl86kTMFk-m9-eA7kedcUcwCPEtvRebDx-IoisEXXReLutOfBEcKfLzrFGqe96gbrTnapWq1W2hsGtfq0yOlWUidA1pymoN8Cnhmm3M=w409-h545"],
-            variants: [ { name: "500 Gram", price: 35000 }, { name: "1 Kg", price: 65000 }, { name: "5 Kg (Dus)", price: 245000 } ]
+            variants: [ { name: "5kg (1dus)", price: 245000 }, { name: "5kg (5dus)", price: 230000 }, { name: "5 Kg (10dus)", price: 225000 } ]
         },
         { 
             id: 104, cat: "kurma", name: "Kurma Mesir Golden Valley", price: 260000, 
@@ -399,15 +415,33 @@
             info: "Minuman", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiBFa_q7CtHbFeoVQVJnhxQ5gilGYGbFgf-sPoDmiYqLjpDROAgbnF_X9hTCUnzlH2v-nJdOguivLGZSC0TsOwZ1rjOc8Nf1rB7jBSWf7PnHu9jeRj9NWAKa5bfRf2FUgVx94CvrRFWO0F1pi2EdfMvCx1oo7wPFp-sqbKqK3u8tDQNkjszE4WvjV2wj7w", "https://blogger.googleusercontent.com/img/a/AVvXsEj9L-ZQOC3DqQZwBhC2HqS9cBAepqtgviP8gdtkEYaDfbCt6y4P6kpwZ_ltDu-shZiQ7V7G5rmY_5aQzKydbuGz9qZRHSROFI6kjuIBh1RMaA7vsqRquc8kVqRCOolonV9GyTTmqFA_Ba6m9g56QPp2zNNr4X4NPeCBajkhSuA1izcaMGuBG_wNasq0MMg"],
             variants: [ { name: "1 Renteng (10 Sachet)", price: 18000 }, { name: "1 Bal (20 Renteng)", price: 340000 } ]
         },
-        { id: 106, cat: "kurma", name: "Kurma Ajwa Al-Madinah", price: 70000, info: "Kurma Nabi", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEge3ETojmZuh7crBuUnDZ6vbL-yWPqtjYmvrhOs0kUD8NbP4K9OMh4zFXUQ0QqwjE9tjnhP6SA8UOkfj78qu6lhb_1U3dQ0qGCiJZEsCN_z8BEIaJDL8DCvi_fbHqsGg5uJ5thk29fIPAeJrAbu1CPsRlR_5NxqZ2PX2LJ4YrUFnXjbNJJMYKAmJIB1kSE", "https://blogger.googleusercontent.com/img/a/AVvXsEjUT1guhNoBhTj4wt9QykVytAds9H45MOs6apG7yIr7ivDUZvv2mZhvfZ3VZ6uZtbaRXwvoZhVoUSe-wEED0taTiQsEoxMsSRmE8-lO_sTHRUH2XRJCd5m0x8oqO7m3RhlOiA1ECEwRNpc5xAiFOvx7p_ykITWZ2Bi1kTNiM7Z2IH5HgAd-aQDPi_Veqks"], variants: [{name: "500 Gram", price: 70000}, {name: "1 Kg", price: 135000}] },
-        { id: 301, cat: "makanan", name: "Coklat Turkey Truffle", price: 170000, info: "Mix Rasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEj6egarq3OMPJkpAvVpmZ_OOc6Xh5ZpGh6VW-JrTcgXWHf9SPSexX-EOt5NJFBkXK_WTAJIVbC_KtncDUxqC8v05pDf8X6J2ieR5Q4Gm67sPxESz49BxEzEtP2PNNgGWvU7JDorZ0Gf3CFoX7gfjM3K9azQLOFr6_1x_auzQKnArOJsMxrAqGp8Rzobr5s"] },
-        { id: 401, cat: "minuman", name: "Madu Vidat Kids", price: 99000, info: "175gr", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiuhPcrmbXmPsUf_HBPG1ocBvaIgNOoGI2Q0TTf4pa2a5iEjiaYLNym-dD38Xpbnw1YS__ux_Gh64R6k8p8Yg2D85AWvDJNc_pPnmw_SJFYcTrjSmzOiNAoHVbFXOeNbJvPlk5avBWOc2qu46e8kRDt586bzt-7iRTRC8lB60ehnMSMry8WpVEBJN8aHjSt", "https://blogger.googleusercontent.com/img/a/AVvXsEg30EjqVBFH6t8ifsYzjJE-Z4nWeBuyv6WgsTtfjEKHKgz7nc9CQIQgZ9_Z_WThqqNvW6zEoak5nuOiauKxl1ENJ7kdVCZcsTv9yQvOPR4_lycS1HHaSVReSWmFKZXrHFrwHBqsO-wRvVDdRhSs8xuvSoGnm7-YnQopGd-Y7BaIfVBNhaxtvMqwuXjT4Zse"] },
-        { id: 404, cat: "minuman", name: "Teh Kumis Kucing", price: 30000, info: "20 Kantong", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhtkMA7ncH7lmdSQ6BN1DW_QEBPbneAH8bwhwPSTR0qt5XABAyEKVjjoLpW6V6ejwuvyRjroabzC-uwphlN8y4rg1-U0eBJ6vfTmUtwjZpuAUhGJxSfmQzaqNSv2rwos2x6gAqGt5gE2wGR-pUp_5Heluzcnit-IclTsJ_hynMrCBtJs7AmCxxZseg9sKZJ", "https://blogger.googleusercontent.com/img/a/AVvXsEjcKqTBs2tpQhcN9Y2SMnLZaJM2tLVDJW5B1lgc88SVkiFWgZIrshU77rcM9nBiv4qHvhctv0vH4tnVqeVIRjal0lFjs9mnPHOLeKmtgX2Mc_7s35-WRkl11l2jMVZHIE1zNKjrh_FnuriifJmabYLCqptdUKC_FcsMiQfHV7PfZuKhwqlyAehBlpj_ij2t"] }
-    ];
+        { id: 106, cat: "kurma", name: "Kurma Ajwa Al-Madinah", price: 70000, 
+            info: "Kurma Nabi", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEge3ETojmZuh7crBuUnDZ6vbL-yWPqtjYmvrhOs0kUD8NbP4K9OMh4zFXUQ0QqwjE9tjnhP6SA8UOkfj78qu6lhb_1U3dQ0qGCiJZEsCN_z8BEIaJDL8DCvi_fbHqsGg5uJ5thk29fIPAeJrAbu1CPsRlR_5NxqZ2PX2LJ4YrUFnXjbNJJMYKAmJIB1kSE", "https://blogger.googleusercontent.com/img/a/AVvXsEjUT1guhNoBhTj4wt9QykVytAds9H45MOs6apG7yIr7ivDUZvv2mZhvfZ3VZ6uZtbaRXwvoZhVoUSe-wEED0taTiQsEoxMsSRmE8-lO_sTHRUH2XRJCd5m0x8oqO7m3RhlOiA1ECEwRNpc5xAiFOvx7p_ykITWZ2Bi1kTNiM7Z2IH5HgAd-aQDPi_Veqks"], 
+            variants: [{name: "500 Gram", price: 70000}, {name: "1 Kg", price: 135000}] 
+        },
+        { id: 301, cat: "makanan", name: "Coklat Turkey Truffle", price: 170000, 
+            info: "Mix Rasa", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEj6egarq3OMPJkpAvVpmZ_OOc6Xh5ZpGh6VW-JrTcgXWHf9SPSexX-EOt5NJFBkXK_WTAJIVbC_KtncDUxqC8v05pDf8X6J2ieR5Q4Gm67sPxESz49BxEzEtP2PNNgGWvU7JDorZ0Gf3CFoX7gfjM3K9azQLOFr6_1x_auzQKnArOJsMxrAqGp8Rzobr5s"] 
+        },
+        { id: 401, cat: "minuman", name: "Madu Vidat Kids", price: 99000, 
+            info: "175gr", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEiuhPcrmbXmPsUf_HBPG1ocBvaIgNOoGI2Q0TTf4pa2a5iEjiaYLNym-dD38Xpbnw1YS__ux_Gh64R6k8p8Yg2D85AWvDJNc_pPnmw_SJFYcTrjSmzOiNAoHVbFXOeNbJvPlk5avBWOc2qu46e8kRDt586bzt-7iRTRC8lB60ehnMSMry8WpVEBJN8aHjSt", "https://blogger.googleusercontent.com/img/a/AVvXsEg30EjqVBFH6t8ifsYzjJE-Z4nWeBuyv6WgsTtfjEKHKgz7nc9CQIQgZ9_Z_WThqqNvW6zEoak5nuOiauKxl1ENJ7kdVCZcsTv9yQvOPR4_lycS1HHaSVReSWmFKZXrHFrwHBqsO-wRvVDdRhSs8xuvSoGnm7-YnQopGd-Y7BaIfVBNhaxtvMqwuXjT4Zse"] 
+        },
+        { id: 404, cat: "minuman", name: "Teh Kumis Kucing", price: 30000, 
+            info: "20 Kantong", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEhtkMA7ncH7lmdSQ6BN1DW_QEBPbneAH8bwhwPSTR0qt5XABAyEKVjjoLpW6V6ejwuvyRjroabzC-uwphlN8y4rg1-U0eBJ6vfTmUtwjZpuAUhGJxSfmQzaqNSv2rwos2x6gAqGt5gE2wGR-pUp_5Heluzcnit-IclTsJ_hynMrCBtJs7AmCxxZseg9sKZJ", "https://blogger.googleusercontent.com/img/a/AVvXsEjcKqTBs2tpQhcN9Y2SMnLZaJM2tLVDJW5B1lgc88SVkiFWgZIrshU77rcM9nBiv4qHvhctv0vH4tnVqeVIRjal0lFjs9mnPHOLeKmtgX2Mc_7s35-WRkl11l2jMVZHIE1zNKjrh_FnuriifJmabYLCqptdUKC_FcsMiQfHV7PfZuKhwqlyAehBlpj_ij2t"] 
+        },
+        { id: 500, cat: "makanan", name: "Kue Nastar", price: 85000, 
+            info: "Premium/Ekonomis", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEgnKzhzqNDEe3HHAtjni4qAbhLzTSxNeCLFrpKGlGe8BqBEaDKCp45L-rRCSkgACT1sWYK6bcwtsX-LTskoBgKVQDznip3V8JZzCct04NtLSTsZUd6lbr-l0S2_OCPXXU2hu2ZCjNFhsL2pIQwBftX4KZeWlGblmLjVMg_Usc1BT1bLE7HT05rftOK3gcsk", "https://blogger.googleusercontent.com/img/a/AVvXsEgeBYlZQjtd8Bl_qy-n9icn7VEf_0Vte6zkgv5LIRZmBOTogxxUOnQUiZIutzWvNbWFi4NrG20Erj840Iv3sCfNxtzAci34nvtBVW1F-9sBMMzCe0GSaMCGuG2pLo5DFVz4ZsvwACPj6JPXz9YhOkx6BDY7XyvjHayJJ8pTZ05b1WpzxVdnMC6R8Yv1YzH5"], 
+            variants: [{name: "Premium 600ml", price: 85000}, {name: "Ekonomis 600ml", price: 55000}] 
+        },
+        { id: 501, cat: "makanan", name: "Kue Thumbprint", price: 55000, 
+            info: "Strawberry/Coklat", images: ["https://blogger.googleusercontent.com/img/a/AVvXsEjHDSohLotwTPuDQXBWfP5ku97Ba3p24O96_WdJh26I9DwvBj1Oy92l_8owWouXHX3J_hwis6pJrufKCpAqIx-MoxWEGyeUD2SW-cSNCIcXtIIccXuclSrHvNaOt6NqbDGafVVKbNg-I5Kn4hVTDlBZER9s7SBqopEv3qabQ2JwJlS0Enzi2VE1dU_C5mtk"], 
+            variants: [{name: "Strawberry 600ml", price: 55000}, {name: "Coklat 600ml", price: 55000}] 
+        }
+        ];
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let currentCat = 'all';
     let imgState = {};
+    let currentModalImgIdx = 0; // Independent modal slider index
 
     products.forEach(p => imgState[p.id] = 0);
 
@@ -433,7 +467,7 @@
                 priceLabel = `<span class="start-from">Mulai dari</span><br>`;
             }
 
-            // Slider Logic
+            // Slider Logic for Card
             if(p.images.length > 1) {
                 dots = `<div class="dots-container">${p.images.map((_,i) => `<div class="dot ${i===idx?'active':''}"></div>`).join('')}</div>`;
                 arrows = `
@@ -488,6 +522,7 @@
 
     function openDetail(id) {
         currentProduct = products.find(x => x.id === id);
+        currentModalImgIdx = 0; // Reset modal slider to first image
         let variantHtml = "";
         
         if (currentProduct.variants && currentProduct.variants.length > 0) {
@@ -504,8 +539,21 @@
             currentSelectedVariant = null;
         }
 
+        // Generate Slider Buttons for Modal if needed
+        let modalSliderControls = "";
+        if(currentProduct.images.length > 1) {
+            modalSliderControls = `
+                <button class="modal-slider-btn modal-prev" onclick="slideModalImg(-1)">❮</button>
+                <button class="modal-slider-btn modal-next" onclick="slideModalImg(1)">❯</button>
+            `;
+        }
+
         document.getElementById("modalContent").innerHTML = `
-            <img src="${currentProduct.images[0]}" style="width:100%; border-radius:12px; margin-bottom:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2)">
+            <div class="modal-img-wrapper">
+                <img id="modalMainImg" src="${currentProduct.images[0]}" class="modal-main-img">
+                ${modalSliderControls}
+            </div>
+            
             <h2 style="color:var(--text-main); font-family:'Playfair Display', serif; margin-bottom:5px;">${currentProduct.name}</h2>
             <div id="modalPriceDisplay" style="font-size:24px; font-weight:bold; color:var(--gold); margin-bottom:15px;">
                 Rp ${(currentSelectedVariant ? currentSelectedVariant.price : currentProduct.price).toLocaleString()}
@@ -519,6 +567,20 @@
             </button>
         `;
         document.getElementById("productModal").classList.add("active");
+    }
+
+    function slideModalImg(dir) {
+        if(!currentProduct) return;
+        currentModalImgIdx += dir;
+        if(currentModalImgIdx < 0) currentModalImgIdx = currentProduct.images.length - 1;
+        if(currentModalImgIdx >= currentProduct.images.length) currentModalImgIdx = 0;
+        
+        const img = document.getElementById("modalMainImg");
+        img.style.opacity = 0;
+        setTimeout(() => {
+            img.src = currentProduct.images[currentModalImgIdx];
+            img.style.opacity = 1;
+        }, 200);
     }
 
     function changeVariant(idx) {
@@ -619,6 +681,7 @@
     if(localStorage.getItem("theme") === "light") toggleTheme();
     renderStore(); renderCart();
 
+    // HERO SLIDE
     let heroIdx = 0;
     const heroes = document.querySelectorAll('.hero-bg');
     setInterval(() => {
